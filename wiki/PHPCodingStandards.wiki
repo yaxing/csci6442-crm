@@ -1,0 +1,7 @@
+#labels Phase-Implementation
+#PHP Coding standards
+
+Please follow the coding standards:
+
+http://www.dagbladet.no/development/phpcodingstandard/
+
