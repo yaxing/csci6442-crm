@@ -11,7 +11,9 @@ define('ROOT_PATH', dirname(__FILE__));
 
 ini_set('default_charset', 'utf-8');
 
-ini_set('include_path', ROOT_PATH.'/common/php/db'
+ini_set('include_path', 
+			ROOT_PATH.'/common/php/db:'
+			.ROOT_PATH.'/common/php:'
         );
 	
 define ( "IS_DEBUG", true );
