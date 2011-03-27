@@ -72,7 +72,7 @@ class Database
     	echo mysql_error();
     	$this->dbhalt("Wrong database!");
     }
-    //$this->execute("set names UTF8");
+    $this->execute("set names UTF8");
   } 
   
   /*
