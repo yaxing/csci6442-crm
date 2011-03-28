@@ -8,7 +8,7 @@
  */
 
 #region include
-include_once '../../config.php';     
+include_once '..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'config.php';     
 #endregion include
 
 dbTest();
