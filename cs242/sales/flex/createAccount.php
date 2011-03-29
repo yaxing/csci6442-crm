@@ -103,7 +103,7 @@ if (is_null($_POST["State"])){
 if (is_null($_POST["Location_Type"])){
 	$location_type = "Work~~";
 }else $location_type = $_POST["Location_Type"];
- $database = '18902_CRM_Test';
+ $database = '18902_CRM_Prod';
 //define account_person_id by some rule -- TBD!!!
 //$account_person_id = "".$parent_account."-".$first_name."-".$last_name;
 //define account_location_id by some rule -- TBD!!!
