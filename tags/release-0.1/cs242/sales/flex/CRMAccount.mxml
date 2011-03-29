@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" height="844"
+			   >
+	
+	<fx:Declarations>
+		<s:HTTPService id="createAccount" url="createAccount.php"  
+					   useProxy="false" method="POST"> 
+			<mx:request xmlns="">
+				<Account_ID>{firstName.text}</Account_ID> 
+				<Created_by>{firstName.text}</Created_by>
+				<Parent_Account>{parentAccount.text}</Parent_Account>
+				<Website> {website.text} </Website>
+				<Date_As> {dateAs.text} </Date_As>
+				<Customer_Type> {accountType.selectedItem} </Customer_Type>
+				<First_Name> {firstName.text} </First_Name>
+				<Last_Name>{lastName.text}</Last_Name>
+				<Account_Person_Title>{title.text}</Account_Person_Title>
+				<Zip_Code>{zipCode.text}</Zip_Code>
+				<Address1>{address1.text}</Address1>
+				<Address2>{address2.text}</Address2>
+				<City>{city.text}</City>
+				<State>{state.text}</State>	
+				
+			</mx:request>         
+		</s:HTTPService> 
+		
+		<s:ArrayList id="typeAccount">
+			<fx:String>Lead</fx:String>
+			<fx:String>Customer</fx:String>
+		</s:ArrayList>
+		
+		<s:ArrayList id="levelService">
+			<fx:String>Gold</fx:String>
+			<fx:String>Silver</fx:String>
+			<fx:String>Regular</fx:String>
+		</s:ArrayList>
+	</fx:Declarations> 
+	<fx:Script> 
+		<![CDATA[ 
+			import flash.net.*;
+			
+			private function to_create_account():void {
+				var urlReq:URLRequest = new URLRequest("CRMAccount.html");
+				navigateToURL(urlReq, "_self");
+			}
+			private function to_modify_account():void {
+				var urlReq:URLRequest = new URLRequest("CRMCommunication.html");
+				navigateToURL(urlReq, "_self");
+			}
+			private function submit_ok():void{
+				var urlReq:URLRequest = new URLRequest("CRMCommunication.html");
+				navigateToURL(urlReq, "_self");
+			}
+			private function send_data():void { 
+				createAccount.send();
+				to_modify_account();
+			}
+		]]> 
+	</fx:Script> 
+	
+	<s:SkinnableContainer width="452" height="613" x="274" y="176">
+		<!--<mx:Form x="0" y="0" width="452" height="613">-->
+		<!---->
+		<!--<mx:FormItem width="408">-->
+		<s:Label x="63" y="15" text="Parent Account" fontFamily="Verdana" fontWeight="bold"/>
+		<s:TextInput x="201" y="11" width="40%" fontFamily="Verdana" id="parentAccount" contentBackgroundColor="#FFFFFF"/>
+		<!--</mx:FormItem>-->
+		<!--<mx:FormItem width="408">-->
+		<s:Label x="63" y="45" text="Account Type" fontFamily="Verdana" fontWeight="bold"/>
+		<s:DropDownList x="201" y="41" width="40%" id="accountType" 
+						dataProvider="{typeAccount}" prompt="Select type of account"></s:DropDownList>
+		<!--</mx:FormItem>-->
+		
+		<!--<mx:FormItem width="408">-->
+		<s:Label x="63" y="75" text="Title" fontFamily="Verdana" fontWeight="bold"/>
+		<s:TextInput x="201" y="71" width="40%" fontFamily="Verdana" id="title" contentBackgroundColor="#FFFFFF"/>
+		<!--</mx:FormItem>-->
+		
+		<!--<mx:FormItem width="408">-->
+		<s:Label x="63" y="105" text="First Name" fontFamily="Verdana" fontWeight="bold"/>
+		<s:TextInput x="201" y="101" width="40%" fontFamily="Verdana" id="firstName" contentBackgroundColor="#FFFFFF"/>
+		<!--</mx:FormItem>-->
+		
+		<!--<mx:FormItem width="408">-->
+		<s:Label x="63" y="135" text="Last Name" fontFamily="Verdana" fontWeight="bold"/>
+		<s:TextInput x="201" y="131" width="40%" fontFamily="Verdana" id="lastName" contentBackgroundColor="#FFFFFF"/>
+		<!--</mx:FormItem>-->
+		
+		<!--<mx:FormItem width="408">-->
+		<s:Label x="63" y="165" text="Address 1" fontFamily="Verdana" fontWeight="bold"/>
+		<s:TextInput x="201" y="161" width="40%" fontFamily="Verdana" id="address1"/>
+		<!--</mx:FormItem>-->
+		
+		<!--<mx:FormItem width="408">-->
+		<s:Label x="63" y="195" text="Address 2" fontFamily="Verdana" fontWeight="bold"/>
+		<s:TextInput x="201" y="191" width="40%" fontFamily="Verdana" id="address2"/>
+		<!--</mx:FormItem>-->
+		
+		<!--<mx:FormItem width="408">-->
+		<s:Label x="63" y="225" text="City" fontFamily="Verdana" fontWeight="bold"/>
+		<s:TextInput x="201" y="221" width="40%" fontFamily="Verdana" id="city"/>
+		<!--</mx:FormItem>-->
+		
+		<!--<mx:FormItem width="408">-->
+		<s:Label x="63" y="255" text="State" fontFamily="Verdana" fontWeight="bold"/>
+		<s:TextInput x="201" y="251" width="40%" fontFamily="Verdana" id="state"/>
+		<!--</mx:FormItem>-->
+		
+		<!--<mx:FormItem width="408">-->
+		<s:Label x="63" y="285" text="Zip Code" fontFamily="Verdana" fontWeight="bold"/>
+		<s:TextInput x="201" y="281" width="40%" fontFamily="Verdana" id="zipCode"/>
+		<!--</mx:FormItem>-->
+		
+		<!--<mx:FormItem width="408">-->
+		<s:Label x="63" y="315" text="E-mail" fontFamily="Verdana" fontWeight="bold"/>
+		<s:TextInput width="40%" fontFamily="Verdana" y="311" x="201" id="email"/>
+		<!--</mx:FormItem>-->
+		
+		<!--<mx:FormItem width="408">-->
+		<s:Label x="63" y="345" text="Website" fontFamily="Verdana" fontWeight="bold"/>
+		<s:TextInput width="40%" fontFamily="Verdana" y="341" x="201" id="website"/>
+		<!--</mx:FormItem>-->
+		
+		<!--<mx:FormItem width="408">-->
+		<s:Label x="63" y="375" text="Phone" fontFamily="Verdana" fontWeight="bold"/>
+		<s:TextInput width="40%" fontFamily="Verdana" y="371" x="201" id="Phone"/>
+		<!--</mx:FormItem>-->
+		
+		<!--<mx:FormItem width="408">-->
+		<s:Label x="35" y="437" text="Date As Customer/Lead" fontFamily="Verdana" fontWeight="bold"/>
+		<mx:DateField x="201" y="431" width="40%" id="dateAs"/>
+		<!--</mx:FormItem>-->
+		
+		<!--<mx:FormItem width="408">-->
+		<s:Label x="63" y="465" text="Service Level" fontFamily="Verdana" fontWeight="bold"/>
+		<s:DropDownList x="201" y="461" width="40%" id="serviceLevel" 
+						dataProvider="{levelService}" prompt="Select service"></s:DropDownList>
+		<!--</mx:FormItem>-->
+		
+		<s:Button x="191" y="542" label="Submit" click="send_data()"/>
+		<s:Button x="278" y="542" label="Cancel"/>
+		
+		
+		
+		<!--</mx:Form>-->
+	</s:SkinnableContainer>
+	<mx:HRule x="0" y="121" width="100%"/>
+	<mx:VRule x="185" y="-1" height="100%"/>
+	
+	<!-- Define the menu; dataProvider is the default MenuBar property.
+	Because this uses an XML data provider, specify the labelField and
+	showRoot properties. -->
+	<mx:MenuBar id="myMenuBar" labelField="@label" x="325" y="74" height="39" width="305"  cornerRadius="20" fontFamily="Verdana" fontSize="13">
+		<fx:XMLList>
+			<menuitem label="Home"/>
+			<menuitem label="Account">
+				<menuitem label="Create Account" click="to_create_account()"/>
+				<menuitem label="Modify Account" click="to_modify_account()"/>
+				<menuitem label="Delete Account" enabled="false"/>
+			</menuitem>
+			<menuitem label="Ticket">
+				<menuitem label="Create Ticket" />
+				<menuitem label="Ticket Status"/>
+			</menuitem>
+			<menuitem label="Finance"/>
+		</fx:XMLList>
+	</mx:MenuBar>
+	
+</s:Application>
