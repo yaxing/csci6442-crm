@@ -8,15 +8,15 @@
  */
 
 return array(
-	'host' => 'localhost',
-    'user' => 'root',
-	'pwd' => 'root',
-	'dbName' => '18902_CRM_Prod'
-
-//	'host' => '209.237.150.136',
-//    'user' => '18902_crmprod',
-//	'pwd' => 'crmprodcsci242',
+//	'host' => 'localhost',
+//    'user' => 'root',
+//	'pwd' => 'root',
 //	'dbName' => '18902_CRM_Prod'
+
+	'host' => '209.237.150.136',
+    'user' => '18902_crmtest',
+	'pwd' => 'crmtestcsci242',
+	'dbName' => '18902_CRM_Test'
 );
 
 ?>
