@@ -61,7 +61,7 @@ class Database
     }
   
     if(!$this->mConn){
-    	$this->dbhalt("Cannot connect to database!");
+    	$this->dbhalt();
     }
     
     if($this->db==""){
@@ -69,7 +69,7 @@ class Database
     }
     
     if(!mysql_select_db($this->db,$this->mConn)){
-    	echo mysql_error();
+    	//echo mysql_error();
     	$this->dbhalt("Wrong database!");
     }
     $this->execute("set names UTF8");
@@ -176,7 +176,7 @@ class Database
    * define database error message
    */
   private function dbhalt($errmsg){  
-    $msg="Database Failed!";
+    $msg=mysql_error();
     if($errmsg != null){  
     	if($errmsg != ''){
     		$msg=$errmsg;  
@@ -259,23 +259,5 @@ class Database
   		die();
   	}
   }  
-  
-  /*
-   * getField
-   * @param $table: target table name
-   * @param $field: target column name, as an 1-demension array
-   * @return: result as an 2-demension indexed array
-   */
-  public function getField($table, $field = array('*')){
-  	$value = '';
-  	for($i = 0; $i < count($field); $i ++){
-  		$value .= $field[$i].',';
-  	}
-  	$value = substr($value,NULL,-1);
-  	$sql = 'select '.$value.' from '.$table;
-  	$this->select($sql);
-  	return $this->fetchIndexArray();
-  }
-  
 }// end class  
 ?>

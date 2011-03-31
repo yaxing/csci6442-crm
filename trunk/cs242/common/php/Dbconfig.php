@@ -13,10 +13,10 @@ return array(
 //	'pwd' => 'root',
 //	'dbName' => '18902_CRM_Prod'
 
-	'host' => '209.237.150.136',
-    'user' => '18902_crmtest',
+	'host' => 'mysql2.myregisteredsite.com',
+    'user' => '175192_crmtest',
 	'pwd' => 'crmtestcsci242',
-	'dbName' => '18902_CRM_Test'
+	'dbName' => '175192_CRM_Test'
 );
 
 ?>

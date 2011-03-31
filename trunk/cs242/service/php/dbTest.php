@@ -26,14 +26,14 @@ function dbTest(){
 	
 	//create sql statement
 	//updates
-	$sql = "insert into Contact_type values('fax')";
+	$sql = "insert into contact_type values('fax')";
 	$affectedRow = $db->update($sql);
 	
 	//print the number of affected rows
 	echo $affectedRow."</br>";
 	
 	//select
-	$sql = "select * from Contact_type";
+	$sql = "select * from contact_type";
 	$db->select($sql);
 	
 	//fetch result set as an indexed array 
@@ -50,7 +50,7 @@ function dbTest(){
 	echo "</br>".$result[0][0];
 	
 	//delete
-	$sql = "delete from Contact_type where Contact_Type='fax'";
+	$sql = "delete from contact_type where contact_type='fax'";
 	$affectedRow = $db->delete($sql);
 	echo "</br>".$affectedRow;
 }
