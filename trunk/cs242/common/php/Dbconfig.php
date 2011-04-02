@@ -4,7 +4,7 @@
  * configure database connection data
  * @author Yaxing Chen
  * @team SET
- * @date 03/25/2010
+ * @date 03/25/2011
  */
 
 return array(
