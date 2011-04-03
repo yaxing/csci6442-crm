@@ -7,6 +7,8 @@
 
 There are 2 sets of cookies:
 
+setcookie("basic[user_id]")
+
 <strong>basic:</strong> basic information of a logged in user, including user_id and user_role.
 
 <strong>private:</strong> private information of a logged in user, including user_name and user_pwd. <strong>This cookie will only be set if user select "remember me" or "remember my password".</strong>
