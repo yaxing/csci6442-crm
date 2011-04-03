@@ -26,12 +26,12 @@ class Permission
 		$worker = "select * from role_type where role_type = '".$who."'";
 		
 		$isAcc = $db->select($acc);
-		if($db->numRows() > 0){
+		if($isAcc && $db->numRows() > 0){
 			return "account";
 		}
 		
 		$isAcc = $db->select($worker);
-		if($db->numRows() > 0){
+		if($isAcc && $db->numRows() > 0){
 			return "role";
 		}
 		
@@ -51,7 +51,7 @@ class Permission
 		$sql = "select * from permission where permission_name = '".$permission."'";
 		
 		$find = $db->select($sql);
-		if($db->numRows() > 0){
+		if($find && $db->numRows() > 0){
 			return true;
 		}
 		else{
@@ -82,7 +82,7 @@ class Permission
 		}
 		
 		$find = $db->select($sql);
-		if($db->numRows() > 0){
+		if($find && $db->numRows() > 0){
 			return true;
 		}
 		else{
