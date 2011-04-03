@@ -1,30 +1,6 @@
 <strong>cookie for logged in user</strong>
-<table>
-<tr>
-<td>
-<strong>cookie name</strong>
-</td>
-<td>
-<strong>value</strong>
-</td>
-</tr>
-<tr>
-<td>
-<strong>user_id:</strong> 
-</td>
-<td>
-1)account_person_id
-2)worker_id
-</td>
-</tr>
-<tr>
-<td>
-<strong>user_role:</strong>
-</td>
-<td>
+|| <strong>cookie name</strong> || <strong>value</strong>
 
-</td>
-</tr>
-
-</table>
+|| <strong>user_id:</strong> || 1)account_person_id 2)worker_id
+|| <strong>user_role:</strong> || 
                 
