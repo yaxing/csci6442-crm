@@ -1,5 +1,6 @@
 <strong>cookie for logged in user</strong>
 || *<strong>cookie name</strong>* || *<strong>value</strong>* ||
-|| <strong>user_id:</strong> || 1)account_person_id 2)worker_id ||
+|| <strong>user_id:</strong> || 1)account_person_id 
+                                                            2)worker_id ||
 || <strong>user_role:</strong> || ak || 
                 
