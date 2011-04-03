@@ -1,0 +1,21 @@
+<strong>cookie for logged in user</strong>
+<table>
+<tr>
+<td>
+<strong>user_id:</strong> 
+</td>
+<td>
+account_person_id/worker_id
+</td>
+</tr>
+<tr>
+<td>
+<strong>user_role:</strong>
+</td>
+<td>
+
+</td>
+</tr>
+
+</table>
+                
