@@ -22,11 +22,11 @@ Param: $who - assign target, could be an account person account id or a worker r
 
 return: true or false
 
-3. Delete a permission for a certain user or a worker role
+3. Unassign a permission for a certain user or a worker role
 
-Name: delete
+Name: unassign
 
-How to use: Permission::delete("dispatcher", "delete ticket");
+How to use: Permission::unassign("dispatcher", "delete ticket");
 
 Param:$who - assign target, could be an account person account id or a worker role type name
              $permission - permission name
