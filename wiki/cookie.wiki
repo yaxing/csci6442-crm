@@ -1,9 +1,9 @@
-<strong>cookie for logged in user</strong>
-|| *<strong>cookie name</strong>* || *<strong>value</strong>* ||
-|| <strong>setcookie("basic[user_id]")</strong> || account_person_id / worker_id ||
-|| <strong>"basic[user_role]"</strong> || account_person /  worker roles || 
-|| <strong>"private[user_name]"</strong> || user name ||
-|| <strong>"private[user_pwd]"</strong> || user password ||
+*cookie for logged in user*
+|| *cookie name</strong>* || *value* ||
+|| *{{{basic[user_id]}}}* || account_person_id / worker_id ||
+|| *basic[user_role]* || account_person /  worker roles || 
+|| *private[user_name]* || user name ||
+|| *private[user_pwd]* || user password ||
 
 There are 2 sets of cookies:
 
