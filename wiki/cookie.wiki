@@ -2,10 +2,19 @@
 <table>
 <tr>
 <td>
+<strong>cookie name</strong>
+</td>
+<td>
+<strong>value</strong>
+</td>
+</tr>
+<tr>
+<td>
 <strong>user_id:</strong> 
 </td>
 <td>
-account_person_id/worker_id
+1)account_person_id
+2)worker_id
 </td>
 </tr>
 <tr>
