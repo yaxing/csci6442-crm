@@ -1,9 +1,9 @@
 <strong>cookie for logged in user</strong>
 || *<strong>cookie name</strong>* || *<strong>value</strong>* ||
-|| <strong>basic[user_id]</strong> || account_person_id / worker_id ||
-|| <strong>basic[user_role]</strong> || account_person /  worker roles || 
-|| <strong>private[user_name]</strong> || user name ||
-|| <strong>private[user_pwd]</strong> || user password ||
+|| <strong>"basic[user_id]"</strong> || account_person_id / worker_id ||
+|| <strong>"basic[user_role]"</strong> || account_person /  worker roles || 
+|| <strong>"private[user_name]"</strong> || user name ||
+|| <strong>"private[user_pwd]"</strong> || user password ||
 
 There are 2 sets of cookies:
 
@@ -11,7 +11,7 @@ There are 2 sets of cookies:
 
 <strong>private:</strong> private information of a logged in user, including user_name and user_pwd. <strong>This cookie will only be set if user select "remember me" or "remember my password".</strong>
 
-Instruction of basic[user_role]:
+Instruction of "basic[user_role]":
 
 if the user is a worker, then $_COOKIE["basic"]["user_role"] == "account_person"
 
