@@ -15,6 +15,16 @@ include_once '../../config.php';
 class Permission  
 {
 	/**
+	 * error
+	 * error handling function
+	 * @param $msg error message
+	 */
+	private static function error($msg){
+		echo "Error: ".$msg;
+		die();
+	}
+	
+	/**
 	 * findWho
 	 * check if permission target exists and find the user's category: worker role or account person
 	 * @param $who permission target, could be: 1) account person id 2) worker role type
@@ -55,7 +65,7 @@ class Permission
 			return true;
 		}
 		else{
-			Permission::error("Can't find permission");
+			return false;
 		}
 	}
 	
@@ -103,7 +113,9 @@ class Permission
 		
 		$type = Permission::findWho($who);
 		
-  		$findPermission = Permission::findPermission($permission);
+  		if(!$findPermission = Permission::findPermission($permission)){
+  			Permission::error("Can't find permission.");
+  		}
   		
   		$isAssigned = Permission::isAssigned($type, $who, $permission); 
   		
@@ -147,7 +159,7 @@ class Permission
 	 * @param $permission the permission needs to be deleted for target
 	 * @return true or echo error info
 	 */
-	public static function delete($who, $permission){
+	public static function unassign($who, $permission){
 	  	switch(Permission::findWho($who)){
 	  		case 'role':
 	  			$sql = "delete from assigned_permission where 
@@ -156,6 +168,8 @@ class Permission
 	  		case 'account':
 	  			$sql = $sql = "delete from assigned_permission where 
 	  			account_person_id = ".$who." and permission_name = '".$permission."'";
+	  		default:
+	  			break;
 	  	}
 		
 	 	$db = new Database();
@@ -177,16 +191,49 @@ class Permission
   		return Permission::isAssigned(Permission::findWho($who), $who, $permission);
 	}
 	
+	/**
+	 * add
+	 * add new permission
+	 * @param $permission new permission name
+	 * @return true or false
+	 */
+	public static function add($permission){
+  		if(Permission::findPermission($permission)){
+  			Permission::error("Permission already existed.");
+  		}
+  		
+  		$db = new Database();
+  		$sql = "insert into permission values('".$permission."')";
+  		if($db->insert($sql) >= 0){
+  			return true;
+  		}
+  		else{
+  			return false;
+  		}
+	}
 	
 	/**
-	 * error
-	 * error handling function
-	 * @param $msg error message
+	 * delete
+	 * delete permission
+	 * @param $permission permission name
+	 * @return true or false
 	 */
-	private static function error($msg){
-		echo "Error: ".$msg;
-		die();
+	public static function delete($permission){
+  		if(!Permission::findPermission($permission)){
+  			Permission::error("Permission doesn't exist!");
+  		}
+  		
+  		$db = new Database();
+  		$sql = "delete from permission where permission_name = '".$permission."'";
+  		if($db->delete($sql) >= 0){
+  			return true;
+  		}
+  		else{
+  			return false;
+  		}
 	}
+	
+	
   
 }// end class  
 ?>
