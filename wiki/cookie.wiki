@@ -16,6 +16,7 @@ Instruction of {{{basic[user_role]}}}:
 if the user is a worker, then {{{$_COOKIE["basic"]["user_role"] == "account_person"}}}
 
 if the user is a worker, then the user_role can indicate multiple roles for the worker using separator '::'
-eg. {{{$_COOKIE["basic"]["user_role"] = ''worker::dispatcher::sales_manager"}}}.
+
+eg. {{{$_COOKIE["basic"]["user_role"] = "worker::dispatcher::sales_manager"}}}.
 
 After get the cookie, the string needs to be interpreted.
