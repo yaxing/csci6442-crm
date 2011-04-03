@@ -1,5 +1,5 @@
 #labels Phase-Implementation
-1. Assign a permission to a user or a worker role
+<strong>1. Assign a permission to a user or a worker role</strong>
 
 Name: assign
 
@@ -26,9 +26,17 @@ return: true or false
 
 Name: unassign
 
-How to use: Permission::unassign("dispatcher", "delete ticket");
+How to use: Permission::unassign($who, $permission);
 
 Param:$who - assign target, could be an account person account id or a worker role type name
              $permission - permission name
 
 return: true or error message
+
+4. Add new permission
+
+Permission::add($permission);
+
+5. Delete permission
+
+Permission::delete($permission);
