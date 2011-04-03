@@ -1,6 +1,6 @@
 <strong>cookie for logged in user</strong>
 || *<strong>cookie name</strong>* || *<strong>value</strong>* ||
-|| <strong>"basic[user_id]"</strong> || account_person_id / worker_id ||
+|| <strong>setcookie("basic[user_id]")</strong> || account_person_id / worker_id ||
 || <strong>"basic[user_role]"</strong> || account_person /  worker roles || 
 || <strong>"private[user_name]"</strong> || user name ||
 || <strong>"private[user_pwd]"</strong> || user password ||
