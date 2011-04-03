@@ -9,7 +9,7 @@ There are 2 sets of cookies:
 
 *basic:* basic information of a logged in user, including user_id and user_role.
 
-*private:* private information of a logged in user, including user_name and user_pwd. _This cookie will only be set if user select "remember me" or "remember my password"._
+*private:* private information of a logged in user, including user_name and user_pwd. _This cookie will not be set unless user select "remember me" or "remember my password"._
 
 Instruction of {{{basic[user_role]}}}:
 
