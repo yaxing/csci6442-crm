@@ -1,23 +1,21 @@
 *cookie for logged in user*
-|| *cookie name</strong>* || *value* ||
+|| *cookie name* || *value* ||
 || *{{{basic[user_id]}}}* || account_person_id / worker_id ||
-|| *basic[user_role]* || account_person /  worker roles || 
-|| *private[user_name]* || user name ||
-|| *private[user_pwd]* || user password ||
+|| *{{{basic[user_role]}}}* || account_person /  worker roles || 
+|| *{{{private[user_name]}}}* || user name ||
+|| *{{{private[user_pwd]}}}* || user password ||
 
 There are 2 sets of cookies:
 
-setcookie("basic[user_id]")
+*basic:* basic information of a logged in user, including user_id and user_role.
 
-<strong>basic:</strong> basic information of a logged in user, including user_id and user_role.
+*private:* private information of a logged in user, including user_name and user_pwd. _This cookie will only be set if user select "remember me" or "remember my password"._
 
-<strong>private:</strong> private information of a logged in user, including user_name and user_pwd. <strong>This cookie will only be set if user select "remember me" or "remember my password".</strong>
+Instruction of {{{basic[user_role]}}}:
 
-Instruction of "basic[user_role]":
-
-if the user is a worker, then $_COOKIE["basic"]["user_role"] == "account_person"
+if the user is a worker, then {{{$_COOKIE["basic"]["user_role"] == "account_person"}}}
 
 if the user is a worker, then the user_role can indicate multiple roles for the worker using separator '::'
-eg. $_COOKIE["basic"]["user_role"] = ''worker::dispatcher::sales_manager".
+eg. {{{$_COOKIE["basic"]["user_role"] = ''worker::dispatcher::sales_manager"}}}.
 
 After get the cookie, the string needs to be interpreted.
