@@ -8,7 +8,7 @@
  */
 
 return array(
-	'host' => 'mysql2.myregisteredsite.com',
+	'host' => 'mysql2.myregisteredsite.com', 
     'user' => '175192_crmtest',
 	'pwd' => 'crmtestcsci242',
 	'dbName' => '175192_CRM_Test'
