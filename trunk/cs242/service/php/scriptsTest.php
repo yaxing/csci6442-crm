@@ -50,13 +50,15 @@ include_once '../../config.php';
 
 	// prepare database variable
 	$db = new Database();
-
-// *** THIS IS HOW TO USE THE COOKIE *** 	
+	
 //$userId=$_COOKIE["basic"]["user_id"];
-$userId=1; // fake user id until integration
+$userId=1;
+echo "test begins<br/>";
+echo $userId;
+workerViewTickets($db,$userId);
+echo '<br/>';
 
-// *** THIS IS HOW TO CALL A FUNCTION
-//workerViewTickets($db,$userId);
+echo "done";
 
 /*
  * ** CUSTOMER functions follow ** 
@@ -112,7 +114,7 @@ function customerViewActions($db, $userId) {
 	
 	//execute statement
 	$sql = "SELECT * FROM action,ticket WHERE action.parent_ticket=ticket.ticket_id AND ticket.applicant = $applicant";
-	
+	echo $sql;
 	$db->select($sql);
 	$result = $db->fetchIndexArray();
 }
@@ -127,7 +129,7 @@ function customerRateWorker($db, $userId) {
 	
 	//execute statement
 	$sql = "UPDATE action SET worker_rating=$rating WHERE action_id=$action_id;";
-
+echo $sql;
 	$affectedRows = $db->update($sql);
 	//TODO: affected rows should be exactly 1, otherwise report problem
 }
@@ -157,7 +159,7 @@ function workerCreateTicket($db, $userId) {
 	
 	//execute statement
 	$sql = "INSERT INTO ticket VALUES (NULL, $parent_account_of_Applicant, $applicant, $applicant_location, '$customer_priority', '$ticket_description', '$ticket_summary', $created_date, $created_by_worker);";
-
+echo $sql;
 	$affectedRows = $db->insert($sql);
 	//TODO: affected rows should be exactly 1, otherwise report problem
 }
@@ -171,7 +173,7 @@ function workerViewTickets($db, $userId) {
 	
 	//execute statement
 	$sql = "SELECT * FROM ticket WHERE ticket_id = ANY (SELECT parent_ticket FROM action WHERE assigned_to_worker = $assigned_to_worker);";
-
+echo $sql;
 	$db->select($sql);
 	$result = $db->fetchIndexArray();
 }
@@ -188,7 +190,7 @@ function workerViewActionsForTicket($db, $userId) {
 	
 	//execute statement
 	$sql = "SELECT * FROM action WHERE parent_ticket=$ticked_id AND assigned_to_worker=$assigned_to_worker;";
-
+echo $sql;
 	$db->select($sql);
 	$result = $db->fetchIndexArray();
 }
@@ -202,7 +204,7 @@ function workerViewAllActions($db, $userId) {
 	
 	//execute statement
 	$sql = "SELECT * FROM action WHERE assigned_to_worker=$assigned_to_worker;";
-
+echo $sql;
 	$db->select($sql);
 	$result = $db->fetchIndexArray();
 }
@@ -229,12 +231,12 @@ function workerCreateAction($db, $userId) {
 	$percent_completed=0; 
 	$worker_rating='NULL';
 	$actual_completion_date='NULL';
-	$action_priority='low';
+	$action_priority='normal';
 	
 	//execute statement
 	$sql = "INSERT INTO action VALUES (NULL, $parent_ticket, $assigned_to_worker, $assigned_to_skill, '$action_status', $action_created_by, '$action_prob_description', '$action_solution_description', 
 	$percent_completed, $worker_rating,	'$requested_completion_date', $actual_completion_date, $source_of_action, '$action_priority');";
-	
+	echo $sql;
 $affectedRows = $db->insert($sql);
 	//TODO: affected rows should be exactly 1, otherwise report problem
 }
@@ -259,8 +261,8 @@ function workerEditAction($db, $userId) {
 	
 	//execute statement
 	$sql = "UPDATE action SET (action_status='$action_status', action_prob_description='$action_prob_description', action_solution_description='$action_solution_description', 
-	percent_completed=$percent_completed, actual_completion_date=$actual_completion_date) WHERE action_id=$action_id;";
-	
+	percent_completed=$percent_completed, actual_completion_date='$actual_completion_date') WHERE action_id=$action_id;";
+echo $sql;	
 $affectedRows = $db->update($sql);
 	//TODO: affected rows should be exactly 1, otherwise report problem
 }
@@ -304,8 +306,8 @@ function dispatcherCreateAction($db, $userId) {
 
 	//execute statement
 	$sql = "INSERT INTO action VALUES (NULL, $parent_ticket, $assigned_to_worker, $assigned_to_skill, '$action_status', $action_created_by, '$action_prob_description', '$action_solution_description', 
-	$percent_completed, $worker_rating,	'$requested_completion_date', $actual_completion_date, $source_of_action, '$action_priority');";
-	
+	$percent_completed, $worker_rating,	'$requested_completion_date', '$actual_completion_date', $source_of_action, '$action_priority');";
+echo $sql;	
 $affectedRows = $db->insert($sql);
 	//TODO: affected rows should be exactly 1, otherwise report problem	
 }
@@ -316,7 +318,7 @@ $affectedRows = $db->insert($sql);
 function dispatcherViewTickets() {
 	//execute statement
 	$sql = "SELECT * FROM ticket;";
-
+echo $sql;
 	$db->select($sql);
 	$result = $db->fetchIndexArray();
 }
@@ -327,7 +329,7 @@ function dispatcherViewTickets() {
 function dispatcherViewActions($db, $userId) {
 	//execute statement
 	$sql = "SELECT * FROM action;";
-
+echo $sql;
 	$db->select($sql);
 	$result = $db->fetchIndexArray();
 }
@@ -353,7 +355,7 @@ function dispatcherEditAction($db, $userId) {
 	//execute statement
 	$sql = "UPDATE action SET (action_status='$action_status', action_prob_description='$action_prob_description', action_solution_description='$action_solution_description', 
 	percent_completed=$percent_completed, action_priority='$action_priority', assigned_to_worker='$assigned_to_worker', assigned_to_skill='$assigned_to_skill') WHERE action_id=$action_id;";
-
+echo $sql;
 	$affectedRows = $db->update($sql);
 	//TODO: affected rows should be exactly 1, otherwise report problem
 
@@ -372,7 +374,7 @@ function dispatcherAssignActions($db, $userId) {
 	
 	//execute statement
 	$sql = "UPDATE action SET (assigned_to_worker='$assigned_to_worker', assigned_to_skill='$assigned_to_skill') WHERE action_id=$action_id;";
-
+echo $sql;
 	$affectedRows = $db->update($sql);
 	//TODO: affected rows should be exactly 1, otherwise report problem
 }
