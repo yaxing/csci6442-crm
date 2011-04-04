@@ -13,7 +13,7 @@ There are 2 sets of cookies:
 
 Instruction of {{{basic[user_role]}}}:
 
-if the user is a worker, then {{{$_COOKIE["basic"]["user_role"] == "account_person"}}}
+if the user is not a worker, then {{{$_COOKIE["basic"]["user_role"] == "account_person"}}}
 
 if the user is a worker, then the user_role can indicate multiple roles for the worker using separator '::'
 
