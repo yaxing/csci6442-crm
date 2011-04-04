@@ -117,7 +117,7 @@ class Database
   /*
    * define database error message
    */
-  private function dbhalt($errmsg){  
+  private function dbhalt($errmsg = ''){  
     $msg=mysql_error();
     if($errmsg != null){  
     	if($errmsg != ''){
