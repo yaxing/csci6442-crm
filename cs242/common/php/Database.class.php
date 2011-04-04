@@ -115,6 +115,20 @@ class Database
   }
   
   /*
+   * define database error message
+   */
+  private function dbhalt($errmsg){  
+    $msg=mysql_error();
+    if($errmsg != null){  
+    	if($errmsg != ''){
+    		$msg=$errmsg;  
+    	}
+    }
+    echo $msg;  
+    die();  
+  }  
+  
+  /*
    * get result as an indexed and associated array
    */  
   public function fetchArray($resultType=MYSQL_BOTH){  
@@ -154,7 +168,10 @@ class Database
    * return number of result rows
    */  
   public function numRows(){  
-    return mysql_num_rows($this->result);  
+    if($this->result == null){
+    	return 0;
+    }
+  	return mysql_num_rows($this->result);  
   }  
   
   /*
@@ -170,20 +187,6 @@ class Database
       $i++;  
     }  
     return $rs;  
-  }  
-  
-  /*
-   * define database error message
-   */
-  private function dbhalt($errmsg){  
-    $msg=mysql_error();
-    if($errmsg != null){  
-    	if($errmsg != ''){
-    		$msg=$errmsg;  
-    	}
-    }
-    echo $msg;  
-    die();  
   }  
   
   /*
@@ -215,7 +218,6 @@ class Database
 	    return $this->affected_rows;
   	}catch(Exception $e){
   		$this->dbhalt();
-  		die();
   	}  
   }  
   
@@ -229,14 +231,11 @@ class Database
   	try{
   		$this->connect();
 	    $this->result=$this->execute($sql);  
-	  	
 	    $this->insert_id=mysql_insert_id($this->mConn);  
-	    //$this->free_result($result);
 	    $this->dbclose();
 	    return $this->insert_id;  
   	}catch(Exception $e){
   		$this->dbhalt();
-  		die();
   	}
   }  
   
@@ -256,7 +255,6 @@ class Database
 		return $this->affected_rows;  
   	}catch(Exception $e){
   		$this->dbhalt();
-  		die();
   	}
   }  
 }// end class  
