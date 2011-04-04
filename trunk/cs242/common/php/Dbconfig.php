@@ -8,11 +8,6 @@
  */
 
 return array(
-//	'host' => 'localhost',
-//    'user' => 'root',
-//	'pwd' => 'root',
-//	'dbName' => '18902_CRM_Prod'
-
 	'host' => 'mysql2.myregisteredsite.com',
     'user' => '175192_crmtest',
 	'pwd' => 'crmtestcsci242',
