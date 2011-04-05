@@ -6,6 +6,7 @@
 *@date 03/26/2011
 */      
 
+
 class Database  
 {  
   private $pConnect=FALSE;//permernent connect permission  
