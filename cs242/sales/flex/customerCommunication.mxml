@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600"
+			   creationComplete="get_cust_info()">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:HTTPService id="createCommunication" url="createCommunication.php"
+					   useProxy="false" method="POST">
+			<mx:request xmlns="">
+				<Parent_Account> {parent_account.selectedItem} </Parent_Account>
+				<Account_Person> {account_person.selectedItem} </Account_Person>
+				<Subject> {subject.text} </Subject>
+				<Description> {description.text} </Description>
+			</mx:request>
+		</s:HTTPService>
+		<s:HTTPService id="accountInfo" url="accountInfo.php" useProxy="false" resultFormat="e4x"/>
+		<s:HTTPService id="personInfo" url="personInfo.php" useProxy="false"  method="POST" resultFormat="e4x">
+			<mx:request xmlns="">
+				<Parent_Account> {parent_account.selectedItem} </Parent_Account>
+			</mx:request>
+		</s:HTTPService>
+		<s:HTTPService id="sendtoService" url="service.php" useProxy="false" method="GET" />
+			
+		<mx:XMLListCollection id="pi" source="{personInfo.lastResult.person_name}"/>
+		<mx:XMLListCollection id="ai" source="{accountInfo.lastResult.account_name}"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import flash.net.*;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.*;
+			import mx.rpc.events.ResultEvent;
+			
+			import spark.events.IndexChangeEvent; 
+			[Bindable] 
+			var accounts:ArrayCollection;
+			[Bindable]
+			var acpersons:ArrayCollection;
+			
+			private function get_cust_info():void{
+				accountInfo.send();
+				//personInfo.send();
+			}
+			private function submit_ok():void{
+				var urlReq:URLRequest = new URLRequest("ok.html");
+				navigateToURL(urlReq, "_self");
+			}
+			private function send_data():void {
+				createCommunication.send();
+				Alert.show("Communication created!!!");
+				var urlReq:URLRequest = new URLRequest("customerCommunication.html");
+				navigateToURL(urlReq, "_self");
+				//to_modify_account();
+			}
+			private function to_action():void{
+				;/*createCommunication.send();
+				var urlReq:URLRequest = new URLRequest("../test/action.html");
+				navigateToURL(urlReq, "_self");*/
+			}
+			protected function parent_account_changeHandler(event:Event):void {
+				account_person.enabled = true;
+				personInfo.send();
+			}
+
+		]]>
+	</fx:Script>
+	
+	<mx:Form y="164" borderVisible="true" dropShadowVisible="false" fontFamily="Verdana" horizontalCenter="-130">
+		<mx:FormHeading label="Customer Communication" fontSize="19"/>
+		<mx:FormItem id="lblParentAccount" label="Parent Account" fontFamily="Verdana" fontWeight="bold" verticalGap="12" indicatorGap="30" horizontalAlign="left" paddingTop="50">
+			<s:DropDownList width="230" fontFamily="Verdana" fontSize="12" id="parent_account" change="parent_account_changeHandler(event)"
+							prompt="Select a Parent Account" dataProvider="{ai}">
+			</s:DropDownList>
+			<!--<s:TextInput id="parent_account" width="230" fontFamily="Verdana" fontSize="12"/>-->
+		</mx:FormItem>
+		<mx:FormItem id="lblAccountPerson" label="Account Person" fontFamily="Verdana" fontWeight="bold" verticalGap="12" indicatorGap="30">
+			<s:DropDownList width="230" fontFamily="Verdana" fontSize="12" id="account_person" enabled="false"
+							 prompt="Select a Account Person" dataProvider="{pi}">
+			</s:DropDownList>
+			<!--<s:TextInput id="account_person" width="230" fontFamily="Verdana" fontSize="12" paddingTop="7"/>-->
+		</mx:FormItem>
+		<mx:FormItem id="lblSubject" label="Subject" fontWeight="bold" fontFamily="Verdana" verticalGap="12" indicatorGap="30">
+			<s:TextInput id="subject" width="230" fontFamily="Verdana" fontSize="12"/>
+		</mx:FormItem>
+		<mx:FormItem id="lblDescription" label="Description" fontFamily="Verdana" fontWeight="bold" verticalGap="12" indicatorGap="30">
+			<s:TextArea id="description" height="120" width="230" fontFamily="Verdana" fontSize="12"/>
+		</mx:FormItem>
+		<!--<s:HGroup paddingLeft="100" paddingRight="30">
+			<mx:FormItem paddingTop="80" borderVisible="false">
+				<s:Button label="Save" id="btnCommunicationSubmit" click="send_data()"/>
+			</mx:FormItem>
+			<mx:FormItem paddingTop="80" borderVisible="false">
+				<s:Button label="Cancel" id="btnCommunicationCancel" />
+			</mx:FormItem>	
+		</s:HGroup>-->
+		<mx:FormItem  direction="horizontal" paddingTop="80">
+			<s:Button label="Create Action" id="btnCreateAction" click="to_action()"/>
+			<mx:Spacer width="5" />
+			<s:Button label="Save" id="btnCommunicationSubmit" click="send_data()"/>
+			<mx:Spacer width="5" />
+			<s:Button label="Cancel" id="btnCommunicationCancel" />
+		</mx:FormItem>
+	</mx:Form>	
+	
+	<mx:HRule x="0" y="121" width="100%"/>
+	<mx:VRule x="185" y="-1" height="100%"/>		
+</s:Application>
