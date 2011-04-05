@@ -19,7 +19,7 @@ define ( "IS_DEBUG", true );
 //define ( "IS_DEBUG", FALSE );
 
 if (IS_DEBUG) {
-	//ini_set ( 'display_errors', on );
+	ini_set ( 'display_errors', on );
 	//error_reporting ( E_ALL );
 	error_reporting((E_ALL ^ E_NOTICE)|E_USER_ERROR|E_USER_WARNING);
 } else {
