@@ -20,3 +20,7 @@ if the user is a worker, then the user_role can indicate multiple roles for the 
 eg. {{{$_COOKIE["basic"]["user_role"] = "worker::dispatcher::sales_manager"}}}.
 
 After get the cookie, the string needs to be interpreted.
+
+*password*:
+"in database: "{{{md5(m5d(pwd))}}}
+"in cookie: "{{{md5(pwd)}}} 
