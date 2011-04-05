@@ -8,7 +8,7 @@
  */
 
 return array(
-	'host' => 'localhost',//'host' => 'mysql2.myregisteredsite.com',
+//	'host' => 'localhost','host' => 'mysql2.myregisteredsite.com',
 //    'user' => 'root',
 //	'pwd' => 'root',
 //	'dbName' => '18902_CRM_Prod'
