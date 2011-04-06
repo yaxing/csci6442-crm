@@ -23,6 +23,6 @@ After get the cookie, the string needs to be interpreted.
 
 *password*:
 
-*in database: *{{{md5(m5d(pwd))}}}
+*in database: *{{{md5(md5(pwd))}}}
 
 *in cookie: *{{{md5(pwd)}}} 
