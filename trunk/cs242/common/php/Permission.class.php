@@ -135,8 +135,8 @@ class Permission
   			case "account":
   				$sql = "insert into assigned_permission values(
   							null,
-  							null,
   							'".$who."',
+  							null,
   							'".$permission."'
   						)";
   				
