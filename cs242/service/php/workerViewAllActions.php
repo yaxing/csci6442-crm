@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Back-end customer ticket creation
+  * Show all actions assigned to the curent worker
  * 
  * @author Alex Florescu
  * @team Services
@@ -20,6 +20,13 @@ include_once 'header.php';
 	$sql = "SELECT * FROM action WHERE assigned_to_worker=$assigned_to_worker;";
 
 	$db->select($sql);
-	$result = $db->fetchIndexArray();
- 
+	$result = $db->fetchAssoc();
+	
+	foreach ($result as $index => $row) {
+		echo "<action>\n";
+		foreach ($row as $column => $value)
+			echo "<$column>$value</$column>\n";
+		echo "</action>\n\n";
+	}		 		
+  
  ?>

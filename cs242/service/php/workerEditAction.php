@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Back-end customer ticket creation
+  * Worker edits an action assigned to him (assuming that the form only shows such actions)
  * 
  * @author Alex Florescu
  * @team Services
@@ -22,7 +22,7 @@ include_once 'header.php';
 	$percent_completed=$_POST['percent_completed']; 
 	// if actions is completed, put in the current date
 	if ($action_status == "COMPLETED")
-		$actual_completion_date='CURDATE()'; 
+		$actual_completion_date='NOW()'; 
 	else
 		$actual_competion_date=NULL;
 	
@@ -32,7 +32,8 @@ include_once 'header.php';
 	percent_completed=$percent_completed, actual_completion_date=$actual_completion_date) WHERE action_id=$action_id;";
 	
 	$affectedRows = $db->update($sql);
-	//TODO: affected rows should be exactly 1, otherwise report problem
+	//affected rows should be exactly 1, otherwise report problem
+	echo '<affectedRows>'.$affectedRows."<affectedRows>\n"; 
 
  
  ?>
