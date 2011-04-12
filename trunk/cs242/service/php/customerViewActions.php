@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Back-end customer ticket creation
+ * Customer views all actions involved with a ticket assigned to him
  * 
  * @author Alex Florescu
  * @team Services
@@ -20,8 +20,16 @@ include_once 'header.php';
 	$applicant=$userId; 
 	
 	//execute statement
-	$sql = "SELECT * FROM action,ticket WHERE action.parent_ticket=ticket.ticket_id AND ticket.applicant = $applicant";
+	$sql = "SELECT action.* FROM action,ticket WHERE action.parent_ticket=ticket.ticket_id AND ticket.applicant = $applicant";
 	
 	$db->select($sql);
-	$result = $db->fetchIndexArray();
+	$result = $db->fetchAssoc();
+	
+	foreach ($result as $index => $row) {
+		echo "<action>\n";
+		foreach ($row as $column => $value)
+			echo "<$column>$value</$column>\n";
+		echo "</action>\n\n";
+	}		 		
+
  ?>

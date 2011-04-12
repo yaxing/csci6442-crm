@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Back-end customer ticket creation
+  * Dispatcher edits an action
  * 
  * @author Alex Florescu
  * @team Services
@@ -33,6 +33,8 @@ include_once 'header.php';
 	percent_completed=$percent_completed, action_priority='$action_priority', assigned_to_worker='$assigned_to_worker', assigned_to_skill='$assigned_to_skill') WHERE action_id=$action_id;";
 
 	$affectedRows = $db->update($sql);
-	//TODO: affected rows should be exactly 1, otherwise report problem
+
+	//affected rows should be exactly 1, otherwise report problem
+	echo '<affectedRows>'.$affectedRows."<affectedRows>\n"; 
 
  ?>

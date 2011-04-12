@@ -18,6 +18,6 @@ include_once '../../config.php';
 
 	// *** THIS IS HOW TO USE THE COOKIE *** 	
 	//$userId=$_COOKIE["basic"]["user_id"];
-	$userId=1; // fake user id until integration
+	$userId=4; // fake user id until integration
 
 ?>

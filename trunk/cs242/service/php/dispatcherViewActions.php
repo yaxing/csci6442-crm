@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Back-end customer ticket creation
+  * Dispatcher views all actions
  * 
  * @author Alex Florescu
  * @team Services
@@ -17,6 +17,13 @@ include_once 'header.php';
 	$sql = "SELECT * FROM action;";
 
 	$db->select($sql);
-	$result = $db->fetchIndexArray();
+	$result = $db->fetchAssoc();
+	
+	foreach ($result as $index => $row) {
+		echo "<action>\n";
+		foreach ($row as $column => $value)
+			echo "<$column>$value</$column>\n";
+		echo "</action>\n\n";
+	}		 		
  
  ?>

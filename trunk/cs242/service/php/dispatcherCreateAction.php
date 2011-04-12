@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Back-end customer ticket creation
+  * Dispatcher creates action for a given ticket 
  * 
  * @author Alex Florescu
  * @team Services
@@ -35,18 +35,19 @@ include_once 'header.php';
 	$actual_completion_date='NULL';
 	
 	/* test variables
-	$parent_ticket=3;
-	$assigned_to_worker=1;
-	$assigned_to_skill='NULL';
-	$source_of_action='NULL';
-	$action_priority='low';
+  		$parent_ticket=3;
+		$assigned_to_worker=1;
+		$assigned_to_skill='NULL';
+		$source_of_action='NULL';
+		$action_priority='low';
 	*/
 
 	//execute statement
 	$sql = "INSERT INTO action VALUES (NULL, $parent_ticket, $assigned_to_worker, $assigned_to_skill, '$action_status', $action_created_by, '$action_prob_description', '$action_solution_description', 
 	$percent_completed, $worker_rating,	'$requested_completion_date', $actual_completion_date, $source_of_action, '$action_priority');";
 	
-$affectedRows = $db->insert($sql);
-	//TODO: affected rows should be exactly 1, otherwise report problem	
- 
+ 	$affectedRows = $db->update($sql);
+	//affected rows should be exactly 1, otherwise report problem
+	echo '<affectedRows>'.$affectedRows."<affectedRows>\n"; 
+
  ?>

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Back-end customer ticket creation
+ * Customer views all tickets created for himself
  * 
  * @author Alex Florescu
  * @team Services
@@ -19,7 +19,13 @@ include_once 'header.php';
 	//execute statement
 	$sql = "SELECT * FROM ticket WHERE applicant = $applicant";
 	$db->select($sql);
-	$result = $db->fetchIndexArray();
-	print_r($result);
+	$result = $db->fetchAssoc();
+	
+	foreach ($result as $index => $row) {
+		echo "<ticket>\n";
+		foreach ($row as $column => $value)
+			echo "<$column>$value</$column>\n";
+		echo "</ticket>\n\n";
+	}		 		
  
  ?>

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Back-end customer ticket creation
+ * Dispatcher views all tickets
  * 
  * @author Alex Florescu
  * @team Services
@@ -13,10 +13,23 @@
 include_once 'header.php';
 #endregion include
  
-
+	// get the number of tickets
+	
+	/*$sql = "SELECT count(*) FROM ticket";
+	$db->select($sql);
+	$result = $db->fetchArray();
+	echo '<numTickets>'.$result[0][0].'</numTickets>';
+*/
 	//execute statement
 	$sql = "SELECT * FROM ticket;";
 
 	$db->select($sql);
-	$result = $db->fetchIndexArray();
- ?>
+	$result = $db->fetchAssoc();
+	
+	foreach ($result as $index => $row) {
+		echo "<ticket>\n";
+		foreach ($row as $column => $value)
+			echo "<$column>$value</$column>\n";
+		echo "</ticket>\n\n";
+	}		 		
+?>

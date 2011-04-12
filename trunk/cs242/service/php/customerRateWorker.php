@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Back-end customer ticket creation
+ * Customer rates worker that completed an action for him
  * 
  * @author Alex Florescu
  * @team Services
@@ -22,5 +22,7 @@ include_once 'header.php';
 	$sql = "UPDATE action SET worker_rating=$rating WHERE action_id=$action_id;";
 
 	$affectedRows = $db->update($sql);
-	//TODO: affected rows should be exactly 1, otherwise report problem
- ?>
+	//affected rows should be exactly 1, otherwise report problem
+        echo '<affectedRows>'.$affectedRows."<affectedRows>\n";
+
+?>
