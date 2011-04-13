@@ -15,7 +15,7 @@ $user_id;
 $user_role;
 
 $db = new Database();
-
+session_start();
 //new login 
 //if (isset($_POST['username']) && isset($_POST['password']) ) {
 if(true) {
