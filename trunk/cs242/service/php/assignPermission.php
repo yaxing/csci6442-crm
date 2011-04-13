@@ -17,7 +17,7 @@ include_once 'header.php';
 $permission_name=$_POST['permission_name'];
 $role=$_POST['role'];
 
-//$permission_name="Test512";
+//$permission_name="DoSomething";
 //$role="dispatcher";
 
 if(Permission::assign("$role", "$permission_name")) {
@@ -26,6 +26,6 @@ if(Permission::assign("$role", "$permission_name")) {
 else{
  $affectedRows=0; 
 }   
-   echo '<affectedRows>'.$affectedRows."<affectedRows>\n";
+   echo '<affectedRows>'.$affectedRows."</affectedRows>\n";
  
 ?>

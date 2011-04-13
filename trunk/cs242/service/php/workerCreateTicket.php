@@ -35,14 +35,14 @@ include_once 'header.php';
 	//empty or default variables
 	$ticket_summary='';
 	$customer_priority='low';
-	$created_by_worker='NULL';
+	$created_by_worker=1;
 	
 	//execute statement
 	$sql = "INSERT INTO ticket VALUES (NULL, $parent_account_of_Applicant, $applicant, $applicant_location, '$customer_priority', '$description', '$ticket_summary', $created_date, $created_by_worker);";
 
 	$affectedRows = $db->update($sql);
 	//affected rows should be exactly 1, otherwise report problem
-	echo '<affectedRows>'.$affectedRows."<affectedRows>\n"; 
+	echo '<affectedRows>'.$affectedRows."</affectedRows>\n"; 
 	
 //	print "<msg>Ticket has been added</msg>"; 
 	

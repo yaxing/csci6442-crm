@@ -16,11 +16,8 @@ include_once 'header.php';
 	//variables you get from form   
  	$ticket_id = $_POST['ticket_id'];	
 
-	// variables you get from system
-	$assigned_to_worker=$userId; 
-
 	//$ticket_id=1;
-	//$assigned_to_worker=1;
+
 
 	//execute statement
 	$sql = "SELECT * FROM ticket WHERE ticket_id = $ticket_id";

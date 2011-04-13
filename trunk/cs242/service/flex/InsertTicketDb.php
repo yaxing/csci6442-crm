@@ -5,15 +5,12 @@
 	$description=$_POST['description']; 
 	$date=$_POST['date']; 
 	$applicant=$_POST['customerID']; 
-	//$description="lalala";
-	//$date="curdate()";
-	//$applicant='1';
 	$summary='..';
-	$username = '18902_crmtest';
-	$pass='crmtestcsci242';
-	$database='18902_CRM_Test';
+	$username = 'root';
+	$pass='root';
+	$database='18902_CRM_Prod';
 
-	$link=mysql_connect('209.237.150.136', $username, $pass) or 
+	$link=mysql_connect('localhost', $username, $pass) or 
       	die("Error connecting to the database server:".mysql_error().'<br>\n');
 
 	mysql_select_db($database) or
@@ -27,11 +24,10 @@
 	$location='Bucharest';
 	$priority='top';
 
-	$sql = 'INSERT INTO '.$database.'.Ticket VALUES (null, "'.$description.'", "'.$summary.'", "'.$date.'", "'.$parent.'", "'.$applicant.'", "'.$location.'", "'.$priority.'");';
+	$sql = 'INSERT INTO '.$database.'.Ticket VALUES ("", "'.$description.'", "'.$summary.'", "'.$date.'", "'.$parent.'", "'.$applicant.'", "'.$location.'", "'.$priority.'");';
 	
 	$result=mysql_query($sql);
 	
-	print "New Ticket Created \n"; 
-	echo $result;
+	print "Insert Complete";
 	
 ?>

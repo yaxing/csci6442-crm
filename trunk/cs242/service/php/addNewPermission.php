@@ -25,5 +25,5 @@ $available_to=$_POST['available_to'];
 
    $sql = "INSERT INTO permission VALUES ('$permission_name', '$description', '$available_to')";
    $affectedRows=$db->update($sql);
-   echo '<affectedRows>'.$affectedRows."<affectedRows>\n";
+   echo '<affectedRows>'.$affectedRows."</affectedRows>\n";
 ?>
