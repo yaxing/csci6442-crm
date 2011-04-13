@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600"
+			   xmlns:locationtypeservice="services.locationtypeservice.*"
+			   xmlns:session="services.session.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:HTTPService id="contactLocation" url="contactlocation.php" fault="contactLocation_faultHandler(event)" useProxy="false" method="POST">
+			<mx:request xmlns="">				
+				<location_type>
+					{ddLocationType.selectedItem.location_type}
+				</location_type>
+				<city> {txtCity.text} </city>
+				<state> {txtState.text} </state>
+				<zipcode> {txtZip.text} </zipcode>
+				<address1>{txtAddress1.text}</address1>
+				<address2>{txtAddress2.text}</address2>
+			</mx:request>        
+		</s:HTTPService>
+		
+		<locationtypeservice:LocationtypeService id="locationtypeService" fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)" showBusyCursor="true"/>
+		<s:CallResponder id="getAllLocation_typeResult"/>
+		<s:CallResponder id="getCurrentPersonResult"/>
+		<session:Session id="session" fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)" showBusyCursor="true"/>
+		
+	</fx:Declarations>
+	<fx:Script >
+		<![CDATA[
+			import flash.events.*;
+			import flash.net.*;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.*;
+			import mx.events.FlexEvent;
+			import mx.events.MenuEvent;
+			import mx.rpc.events.FaultEvent;
+			import flash.net.*;
+			import flash.events.*;
+			import mx.collections.ArrayCollection;
+			import mx.controls.*;
+			import mx.events.MenuEvent;		
+			
+			public function menuBarItemClickHandler(event:MenuEvent):void {
+				switch(event.label){
+					case 'Create Account':
+						var urlReq:URLRequest = new URLRequest("createAccount.html");
+						navigateToURL(urlReq, "_self");
+						break;
+					case 'Create Communication':
+						var urlReq:URLRequest = new URLRequest("createCommunication.html");
+						navigateToURL(urlReq, "_self");
+						break;
+					case 'Create Account Person':
+						var urlReq:URLRequest = new URLRequest("createAccountPerson.html");
+						navigateToURL(urlReq, "_self");
+						break;
+					case 'Create Account Location':
+						var urlReq:URLRequest = new URLRequest("createAccountLocation.html");
+						navigateToURL(urlReq, "_self");
+						break;
+					case 'Create Contract':
+						var urlReq:URLRequest = new URLRequest("createContract.html");
+						navigateToURL(urlReq, "_self");
+						break;
+				}
+				
+			}
+			private function savebuttonclick(event:MouseEvent):void{
+				contactLocation.send();
+				btnSave.visible=false;
+				btnCancel.visible=false;
+				lbtnMoreLocation.visible=true;
+			}
+			
+			private function relode_contactpage(event:MouseEvent):void{
+				var urlReq:URLRequest = new URLRequest("createAccountLocation.html");
+				navigateToURL(urlReq, "_self");
+			} 
+			
+			
+			protected function ddLocationType_creationCompleteHandler(event:FlexEvent):void 
+			{
+				
+				getAllLocation_typeResult.token = locationtypeService.getAllLocation_type();
+			}
+						
+			protected function contactLocation_faultHandler(event:FaultEvent):void {
+				event.toString();// TODO Auto-generated method stub
+			}						
+						
+			protected function txtPerson_creationCompleteHandler(event:FlexEvent):void
+			{
+				getCurrentPersonResult.token = session.getCurrentPerson();
+			}
+			
+		]]>
+	</fx:Script>
+	<mx:Form horizontalCenter="0" verticalCenter="27" height="404">
+		<mx:FormHeading label="Add Location Information" fontFamily="Verdana" fontSize="15"/>
+		<mx:FormItem label="Account Person Name" fontWeight="bold" fontFamily="Verdana"
+					 verticalGap="10" indicatorGap="30"  paddingTop="10">
+			<s:TextInput id="txtPerson" width="200" fontFamily="Verdana"  fontWeight="normal" 
+						 enabled ="false"
+						 borderVisible="false"
+						  creationComplete="txtPerson_creationCompleteHandler(event)" text="{getCurrentPersonResult.lastResult.first_name}"/>
+		</mx:FormItem>
+		
+		<mx:FormItem label="Location Type" fontWeight="bold" fontFamily="Verdana"
+					 verticalGap="12" indicatorGap="30">
+			<s:DropDownList id="ddLocationType" width="200"							
+							creationComplete="ddLocationType_creationCompleteHandler(event)" 
+							labelField="location_type" >
+				<s:AsyncListView list="{getAllLocation_typeResult.lastResult}"/>
+			</s:DropDownList>			
+		</mx:FormItem>
+		<mx:FormItem label="City" fontWeight="bold" fontFamily="Verdana"
+					 verticalGap="12" indicatorGap="30">
+			<s:TextInput id="txtCity" width="200" fontFamily="Verdana"  fontWeight="normal"/>
+		</mx:FormItem>
+		<mx:FormItem label="State" fontWeight="bold" fontFamily="Verdana"
+					 verticalGap="12" indicatorGap="30">
+			<s:TextInput id="txtState" width="200" fontFamily="Verdana" fontWeight="normal"/>
+		</mx:FormItem>
+		<mx:FormItem label="Zip code" fontWeight="bold" fontFamily="Verdana"
+					 verticalGap="12" indicatorGap="30">
+			<s:TextInput id="txtZip" width="200" fontFamily="Verdana" />
+		</mx:FormItem>
+		<mx:FormItem label="Address 1" fontWeight="bold"  fontFamily="Verdana"
+					 verticalGap="12" indicatorGap="30">
+			<s:TextInput id="txtAddress1" width="200" fontFamily="Verdana"  fontWeight="normal"/>
+		</mx:FormItem>
+		<mx:FormItem label="Address 2"  fontWeight="bold" fontFamily="Verdana"
+					 verticalGap="12" indicatorGap="30">
+			<s:TextInput id="txtAddress2" width="200" fontFamily="Verdana" fontWeight="normal"/>
+		</mx:FormItem>
+		
+		<mx:FormItem direction="horizontal" paddingTop="30">
+			<s:Button id="btnSave" label="Save" visible="true" click="savebuttonclick(event)" />
+			<s:Button id="btnCancel" label="Cancel" visible="true"/>
+		</mx:FormItem>
+		<mx:FormItem >
+			<mx:LinkButton id="lbtnMoreLocation" label="Add More Location" visible="false"
+						   click="relode_contactpage(event)"/>
+		</mx:FormItem>
+	</mx:Form>
+	
+	<mx:MenuBar id="bar" labelField="@label" itemClick="menuBarItemClickHandler(event)" x="325" y="74" height="39" width="305"  cornerRadius="20" fontFamily="Verdana" fontSize="13">
+		<fx:XMLList>
+			<menuitem label="Home"/>
+			<menuitem label="Sales">
+				<menuitem label="Create Account"  />
+				<menuitem label="Create Account Person" />
+				<menuitem label="Create Account Location" />
+				<menuitem label="Create Contract" />
+				<menuitem label="Create Communication" />
+				<!--<menuitem label="Delete Account" enabled="false"/>-->
+			</menuitem>
+			<menuitem label="Ticket">
+				<menuitem label="Create Ticket" />
+				<menuitem label="Ticket Status"/>
+			</menuitem>
+			<menuitem label="Finance"/>
+		</fx:XMLList>
+	</mx:MenuBar>
+	
+	<mx:HRule x="0" y="121" width="100%"/>
+	
+</s:Application>

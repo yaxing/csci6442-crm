@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" height="844" 
+			    xmlns:accountpersonservice="services.accountpersonservice.*">
+	
+	<fx:Declarations>
+		<s:HTTPService id="sendPerson" url="accountLocation.html"
+					   fault="createPerson_faultHandler(event)"
+					   useProxy="false" method="POST">
+			<mx:request xmlns="">
+				<person_id>{person_id.selectedItem.person_id}</person_id>				
+			</mx:request>        
+		</s:HTTPService>
+		<s:CallResponder id="getAllAccount_personResult"/>
+		<accountpersonservice:AccountpersonService id="accountpersonService" fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)" showBusyCursor="true"/>
+		
+		
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.fiber.core.model_internal;
+			import com.adobe.serializers.utility.TypeUtility;
+			
+			import flash.net.*;
+			
+			import mx.controls.*;
+			import mx.core.mx_internal;
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.rpc.events.FaultEvent;
+			
+			//			var urlReq:URLRequest = new URLRequest("AccountPerson.html");
+			
+			private function send_data():void {
+				sendPerson.send();
+				//Alert.show("test----> " + parentAccount.selectedItem.account_id);
+				//Alert.show("Account Person created!!!");
+				
+				var urlReq:URLRequest = new URLRequest("accountLocation.html");
+				navigateToURL(urlReq, "_self");
+			}
+			
+			//cancel data
+			private function cancel_data():void {
+				//Alert.show("test----> " + parentAccount.selectedItem.account_id);
+				Alert.show("Cancle Account Person Input?", "Cancel", 3, this, cancel_method);
+			}
+			
+			//detailed steps for cancel button
+			public function cancel_method(event:CloseEvent):void{
+				var urlReq:URLRequest = new URLRequest("AccountPerson.html");				
+				if(event.detail == Alert.YES)
+					navigateToURL(urlReq, "_self");
+			}			
+			
+			protected function createPerson_faultHandler(event:FaultEvent):void
+			{
+				// TODO Auto-generated method stub
+			}
+		
+			
+			
+			protected function person_id_creationCompleteHandler(event:FlexEvent):void
+			{
+				getAllAccount_personResult.token = accountpersonService.getAllAccount_person();
+			}
+			
+		]]>
+	</fx:Script>
+	
+	
+	<s:SkinnableContainer width="479" height="294" y="176" x="274">
+		<s:Label x="63" y="15" text="Person id" fontFamily="Verdana" fontWeight="bold"/>
+		<s:DropDownList x="201" y="10" id="person_id"  width="194"  labelField="account_person_id"  creationComplete="person_id_creationCompleteHandler(event)">
+			<s:AsyncListView list="{getAllAccount_personResult.lastResult}"/>
+		
+		</s:DropDownList>
+
+		<s:Button x="108" y="192" label="add location" id="saveButton"  click="send_data()"/>
+		<s:Button x="227" y="192" label="Cancel" id="cancelButton" click="cancel_data()"/>
+		<!--<s:Button x="338" y="192" label="Add Location..." id="addLocation"/>-->
+	</s:SkinnableContainer>
+	<mx:HRule x="0" y="121" width="100%"/>
+	<!--<mx:VRule x="185" y="-1" height="100%"/>
+	-->	
+	<!-- Define the menu; dataProvider is the default MenuBar property.
+	Because this uses an XML data provider, specify the labelField and
+	showRoot properties. -->
+	<mx:MenuBar id="myMenuBar" labelField="@label" x="325" y="74" height="39" width="305"  cornerRadius="20" fontFamily="Verdana" fontSize="13">
+		<fx:XMLList>
+			<menuitem label="Home"/>
+			<menuitem label="Account">
+				<menuitem label="Create Account"/>
+				<menuitem label="Create Communication"/>
+				<menuitem label="Delete Account" enabled="false"/>
+			</menuitem>
+			<menuitem label="Ticket">
+				<menuitem label="Create Ticket" />
+				<menuitem label="Ticket Status"/>
+			</menuitem>
+			<menuitem label="Finance"/>
+		</fx:XMLList>
+	</mx:MenuBar>
+	<s:Label x="291" y="132" text="Person Information" fontFamily="Verdana" fontWeight="bold" width="422" height="22" verticalAlign="middle" fontSize="21" textAlign="center"/>
+	
+</s:Application>
+
