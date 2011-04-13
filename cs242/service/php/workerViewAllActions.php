@@ -14,7 +14,7 @@ include_once 'header.php';
 #endregion include
  
 	// variables you get from system
-	$assigned_to_worker=$userId; 
+	$assigned_to_worker=1; //$userId; 
 	
 	//execute statement
 	$sql = "SELECT * FROM action WHERE assigned_to_worker=$assigned_to_worker;";

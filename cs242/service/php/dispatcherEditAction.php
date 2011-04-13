@@ -27,14 +27,14 @@ include_once 'header.php';
 	$assigned_to_worker=$_POST['assigned_to_worker'];
 	$assigned_to_skill=$_POST['assigned_to_skill'];
 	
-	
+	//echo 'H';
 	//execute statement
-	$sql = "UPDATE action SET (action_status='$action_status', action_prob_description='$action_prob_description', action_solution_description='$action_solution_description', 
-	percent_completed=$percent_completed, action_priority='$action_priority', assigned_to_worker='$assigned_to_worker', assigned_to_skill='$assigned_to_skill') WHERE action_id=$action_id;";
-
+	$sql = "UPDATE action SET assigned_to_worker=$assigned_to_worker, assigned_to_skill='$assigned_to_skill',  action_status='$action_status', action_prob_description='$action_prob_description', action_solution_description='$action_solution_description', percent_completed=$percent_completed, action_priority='$action_priority' WHERE action_id=$action_id;";
+	//echo 'H';
+	//echo $sql;
 	$affectedRows = $db->update($sql);
-
+	
 	//affected rows should be exactly 1, otherwise report problem
-	echo '<affectedRows>'.$affectedRows."<affectedRows>\n"; 
-
+	echo '<affectedRows>'.$affectedRows."</affectedRows>\n"; 
+	
  ?>
