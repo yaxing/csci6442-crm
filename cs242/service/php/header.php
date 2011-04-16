@@ -16,8 +16,9 @@ include_once '../../config.php';
 	// prepare database variable
 	$db = new Database();
 
-	// *** THIS IS HOW TO USE THE COOKIE *** 	
-	//$userId=$_COOKIE["basic"]["user_id"];
-	$userId=4; // fake user id until integration
-
+	// Grab data from cookie
+	$userId= $_COOKIE["basic"]["user_id"];
+	$userRole= $_COOKIE["basic"]["user_role"];
+	
+	//$userId=4; // fake user id until integration
 ?>
