@@ -17,7 +17,7 @@ include_once 'header.php';
 	$applicant=$userId; 
 	
 	//execute statement
-	$sql = "SELECT * FROM ticket WHERE applicant = $applicant";
+	$sql = "SELECT * FROM ticket WHERE `contact_id` = $applicant";
 	$db->select($sql);
 	$result = $db->fetchAssoc();
 	
