@@ -9,7 +9,8 @@
 
  
 #region include
-include_once '../../config.php';
+//include_once '../../config.php';
+include_once 'Database.class.php';
 #endregion include
 		
 
