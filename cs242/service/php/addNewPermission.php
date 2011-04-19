@@ -18,12 +18,12 @@ $permission_name=$_POST['permission_name'];
 $description=$_POST['description'];
 $available_to=$_POST['available_to'];
 
+     if(Permission::add("$permission_name")) {  
+       $affectedRows=1; 
+     }
+     else{
+	$affectedRows=0; 
+     }   
 
-//$permission_name="Test512";
-//$description="This is a test";
-//$available_to='No_One';
-
-   $sql = "INSERT INTO permission VALUES ('$permission_name', '$description', '$available_to')";
-   $affectedRows=$db->update($sql);
    echo '<affectedRows>'.$affectedRows."</affectedRows>\n";
 ?>

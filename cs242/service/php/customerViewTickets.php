@@ -15,9 +15,10 @@ include_once 'header.php';
  
 	// variables you get from system
 	$applicant=$userId; 
-	
+//$applicant=1;	
+
 	//execute statement
-	$sql = "SELECT * FROM ticket WHERE `contact_id` = $applicant";
+	$sql = "SELECT * FROM ticket WHERE contact_id = $applicant";
 	$db->select($sql);
 	$result = $db->fetchAssoc();
 	

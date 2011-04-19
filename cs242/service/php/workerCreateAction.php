@@ -36,7 +36,7 @@ include_once 'header.php';
 			      
 	$action_priority='Low';
 
-	/*$parent_ticket=1;
+	 /*$parent_ticket=1;
 	  $action_prob_description='TestAlex';
 	  $action_solution_description='Serious testing';
 	  $requested_completion_date='NOW()';
@@ -45,8 +45,8 @@ include_once 'header.php';
 	*/
 
 	//execute statement
-	$sql = "INSERT INTO action VALUES (NULL, $parent_ticket, $assigned_to_worker, $assigned_to_skill, '$action_status', $action_created_by, '$action_prob_description', '$action_solution_description', $percent_completed, $worker_rating,	'$requested_completion_date', $actual_completion_date, $communication_id, $service_order_id, $service_name,'$action_priority');";
-	echo $sql; 
+	$sql = "INSERT INTO action VALUES (NULL, $parent_ticket, $assigned_to_worker, $assigned_to_skill, '$action_status', $action_created_by, '$action_prob_description', '$action_solution_description', $percent_completed, $worker_rating,	'$requested_completion_date', $actual_completion_date,'$action_priority');";
+	//echo $sql; 
 	$affectedRows = $db->update($sql);
 	//affected rows should be exactly 1, otherwise report problem
 	echo '<affectedRows>'.$affectedRows."</affectedRows>\n";  
