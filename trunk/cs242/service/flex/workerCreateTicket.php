@@ -20,7 +20,7 @@ include_once 'header.php';
 	// Locations for customer should be available in UI for choosing
 	$customer_location_id=$_POST['location'];
 	$customer_priority = $_POST['priority'];
-	$requested_completion=$_POST['requestCompleted'];// 'NOW()'; // ToDO: change later
+	$requested_completion=$_POST['completion_date'];// 'NOW()'; // ToDO: change later
 	
 	// variables you get from system
 	$created_date='NOW()'; // will automatically insert the current date in the SQL table 	
