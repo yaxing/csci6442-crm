@@ -17,6 +17,14 @@
 	$priority = $_POST['priority'];
 	$description=$_POST['description']; 
 	$requested_completion = $_POST['completion_date'];
+	
+	if(strlen($priority) <= 0){
+		$priority = "normal";
+	}
+	if(strlen($requested_completion) <= 0){
+		$requested_completion = "";
+	}
+	
 //$priority = "high";
 //$description = "test";
 //$requested_completion = "2011-05-02";
