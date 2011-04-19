@@ -21,19 +21,16 @@
 	if(strlen($priority) <= 0){
 		$priority = "normal";
 	}
-	if(strlen($requested_completion) <= 0){
-		$requested_completion = "";
-	}
 	
 //$priority = "high";
-//$description = "test";
+//$description = "test2";
 //$requested_completion = "2011-05-02";
 	
 	
 	// variables you get from system
 	$created_date='NOW()'; // will automatically insert the current date in the SQL table 
 	$applicant=$userId;
-	//$applicant = $1; 
+	//$applicant = 1; 
 	
  	// *** TODO 
 	// *** Locations for customer should be available in UI for choosing
@@ -48,10 +45,9 @@
 	
 	//empty or default variables
 	$ticket_summary='';
-	$customer_priority='low';
+	//$customer_priority='low';
 	//$created_by_worker='NULL';
 	$ticket_type = "service";
-	//$assigned_to = 'NULL';
 	
 	//execute statement
 	//$sql = "INSERT INTO ticket VALUES (NULL, '$priority', '$description', '$ticket_summary', $created_date, $created_by_worker, $ticket_type, $requested_completion, $parent_account_of_Applicant, $applicant, $applicant_location, '$customer_priority',    );";
