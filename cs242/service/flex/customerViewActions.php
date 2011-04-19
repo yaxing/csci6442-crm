@@ -18,9 +18,9 @@ include_once 'header.php';
 	
 	// variables you get from system
 	$applicant=$userId; 
-	
+
 	//execute statement
-	$sql = "SELECT action.* FROM action,ticket WHERE action.parent_ticket=ticket.ticket_id AND ticket.applicant = $applicant";
+	$sql = "SELECT action.* FROM action,ticket WHERE action.parent_ticket=ticket.ticket_id AND ticket.contact_id = $applicant";
 	
 	$db->select($sql);
 	$result = $db->fetchAssoc();

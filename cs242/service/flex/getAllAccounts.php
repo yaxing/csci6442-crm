@@ -14,7 +14,7 @@ include_once 'header.php';
 #endregion include
  
 	//get all customers
-	$sql = "SELECT account_person_id,first_name,last_name FROM account_person;";
+	$sql = "SELECT customer_id,customer_name FROM customer;";
 
 	$db->select($sql);
 	$result = $db->fetchAssoc();
