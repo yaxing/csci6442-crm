@@ -14,10 +14,9 @@
 	#endregion include
 	
 	$worker_role_type=$_POST['worker_role_type'];
-	$account_person_id=$_POST['account_person_id'];
 	
 	//execute statement
-	$sql = "SELECT * FROM assigned_permission WHERE worker_role_type='$worker_role_type' AND account_person_id='$account_person_id';";
+	$sql = "SELECT * FROM assigned_permission WHERE worker_role_type='$worker_role_type';";
 	
 	$db->select($sql);
 	$result = $db->fetchAssoc();
