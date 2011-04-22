@@ -18,22 +18,18 @@ include_once 'header.php';
 	$action_prob_description=$_POST['action_prob_description']; 
 	$action_solution_description=$_POST['action_solution_description'];
 	$requested_completion_date=$_POST['requested_completion_date'];
+	$assigned_to_skill=$_POST['assigned_to_skill'];
 
 	// variables you get from system
 	$assigned_to_worker= 1; //$userId;
 	$action_created_by=1; //$userId;
 		
-	//empty or default variables
-	$assigned_to_skill='NULL';
+	//empty or default variables	
 	$action_status="New"; // ??? 
 	$percent_completed=0; 
 	$worker_rating=0;
 	$actual_completion_date='NULL';
 
-	$communication_id=1; // ??????? 
-	$service_order_id=0; // ???????
-	$service_name='NULL'; // ?!??!?!?!?!
-			      
 	$action_priority='Low';
 
 	 /*$parent_ticket=1;
