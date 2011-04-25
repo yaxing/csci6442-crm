@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx" layout="absolute" width="550" height="690" initialize="onLoad()">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:HTTPService
+			id="workerCreateActionService" url="workerCreateAction.php"
+			resultFormat="text"
+			method="POST">
+			
+			<mx:request xmlns="">
+				
+				<parent_ticket>{parent_ticket.text}</parent_ticket>
+				<action_prob_description>{action_prob_description.text}</action_prob_description>
+				<action_solution_description>{action_solution_description.text}</action_solution_description>
+				<requested_completion_date>{requested_completion_date.text}</requested_completion_date>
+				<source_of_action>{source_of_action.text}</source_of_action>
+			</mx:request>
+			
+		</mx:HTTPService>
+		
+		<mx:HTTPService
+			id="dispatcherCreateActionService" url="dispatcherCreateAction.php"
+			resultFormat="text"
+			method="POST">
+			
+			<mx:request xmlns="">
+				<parent_ticket>{parent_ticket.text}</parent_ticket>
+				<action_prob_description>{action_prob_description.text}</action_prob_description>
+				<action_solution_description>{action_solution_description.text}</action_solution_description>
+				<requested_completion_date>{requested_completion_date.text}</requested_completion_date>
+				<source_of_action>{source_of_action.text}</source_of_action>
+				<action_priority>{action_priority.labelField}</action_priority>
+				<assigned_to_worker>{assigned_to_worker.labelField}</assigned_to_worker>
+				<assigned_to_skill>{assigned_to_skill.labelField}</assigned_to_skill>
+			</mx:request>
+			
+		</mx:HTTPService>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			public var myTypeID : String;
+			
+			function onLoad():void
+			{
+				// is Worker
+				if(myTypeID == '1')
+				{
+					form.removeElement(formPriority);
+					form.removeElement(formAssignWorker);
+					form.removeElement(formAssignSkill);
+				}
+				
+			}
+			/* public function getAction(event : ResultEvent) : void
+			{ 
+				actionsource.text = event.result.communication_title;
+				
+				
+			} */
+			function createaction():void
+			{
+				// is Worker
+				if(myTypeID == '1')
+				{
+					workerCreateActionService.send();
+					///	Alert(customerCreateTicketService.lastResult());
+				}
+					// is DISPATCHER
+				else if ( myTypeID == '2')
+				{
+					dispatcherCreateActionService.send();
+				}
+				
+			}
+			
+			function cancel():void
+			{
+				//	customerID.text = "";
+				//	description.text ="";
+			}
+		]]>
+	</fx:Script>
+	
+	<mx:Form id="form" borderVisible="true" dropShadowVisible="false" fontFamily="Verdana"  x="44" y="9">
+		<mx:FormHeading  label="Create Action" fontSize="19"/>
+		<mx:FormItem  label="Parent Ticket ID" fontFamily="Verdana" fontWeight="bold" verticalGap="12" indicatorGap="30" horizontalAlign="left" paddingTop="50">
+			<s:TextInput id="parent_ticket" width="230" fontFamily="Verdana" fontSize="12"/>
+		</mx:FormItem>
+		<mx:FormItem  label="Description" fontFamily="Verdana" fontWeight="bold" verticalGap="12"	  indicatorGap="30">
+			<s:TextArea id="action_prob_description" height="120" width="230"	 fontFamily="Verdana" fontSize="12"/>
+		</mx:FormItem>
+		<mx:FormItem  label="Solution" fontFamily="Verdana" fontWeight="bold" verticalGap="12"	  indicatorGap="30">
+			<s:TextArea id="action_solution_description" height="120" width="230"	 fontFamily="Verdana" fontSize="12"/>
+		</mx:FormItem>
+		
+		<mx:FormItem id="formPriority" label="Priority" fontFamily="Verdana" fontWeight="bold" verticalGap="12"	  indicatorGap="30">
+			<s:DropDownList id="action_priority" width="230"	 fontFamily="Verdana" fontSize="12"/>
+		</mx:FormItem>
+		<mx:FormItem id="formAssignWorker" label="Assign To" fontFamily="Verdana" fontWeight="bold" verticalGap="12"	  indicatorGap="30">
+			<s:DropDownList id="assigned_to_worker" width="230"	 fontFamily="Verdana" fontSize="12"/>
+		</mx:FormItem>
+		<mx:FormItem id="formAssignSkill" label="Skill" fontFamily="Verdana" fontWeight="bold" verticalGap="12"	  indicatorGap="30">
+			<s:DropDownList id="assigned_to_skill"  width="230"	 fontFamily="Verdana" fontSize="12"/>
+		</mx:FormItem>
+		<mx:FormItem  label="Source of Action" fontFamily="Verdana" fontWeight="bold" verticalGap="12"	  indicatorGap="30">
+			<s:TextInput id="source_of_action" width="230"	 fontFamily="Verdana" fontSize="12"/>
+		</mx:FormItem>
+		<mx:FormItem  label="Requested Solution Date" fontFamily="Verdana" fontWeight="bold" verticalGap="12"	  indicatorGap="30">
+			<mx:DateField id="requested_completion_date"  width="230"	 fontFamily="Verdana" fontSize="12"/>
+		</mx:FormItem>
+		
+		
+		<s:HGroup paddingLeft="100" paddingRight="30">
+			<mx:FormItem paddingTop="80" borderVisible="false">
+				<s:Button label="Submit" click="createaction()"/>
+			</mx:FormItem>
+			<mx:FormItem paddingTop="80" borderVisible="false">
+				<s:Button label="Cancel" click=""  />
+			</mx:FormItem>
+			
+		</s:HGroup>
+	</mx:Form>
+	
+	
+</mx:Module>

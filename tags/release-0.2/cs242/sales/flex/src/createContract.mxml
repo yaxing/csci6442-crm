@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" height="844" 
+			   xmlns:listofservicelevelsservice="services.listofservicelevelsservice.*" 
+			   xmlns:accountservice="services.accountservice.*" 
+			   xmlns:communicationservice="services.communicationservice.*" 
+			   xmlns:accountlocationservice="services.accountlocationservice.*">
+	<fx:Declarations>
+		<s:HTTPService id="create_contract" url="createContract.php"
+					   useProxy="false" method="POST"
+					   fault="createContract_faultHandler(event)">
+			<mx:request xmlns="">
+				<Account_ID> {parentAccount.selectedItem.account_id} </Account_ID>
+				<Source_Communication> {sourceCommunication.selectedItem.communication_id} </Source_Communication>
+				<Location_ID> {locationName.selectedItem.account_location_id} </Location_ID>
+				<Level_Of_Service>{serviceLevel.selectedItem.level_of_contract} </Level_Of_Service>
+			</mx:request>        
+		</s:HTTPService>
+		<s:CallResponder id="getAllList_of_service_levelsResult"/>
+		<listofservicelevelsservice:ListofservicelevelsService id="listofservicelevelsService" fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)" showBusyCursor="true"/>
+		<s:CallResponder id="getAllAccountResult"/>
+		<accountservice:AccountService id="accountService" fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)" showBusyCursor="true"/>
+		<s:CallResponder id="getCommunicationByParentAccountIDResult"/>
+		<communicationservice:CommunicationService id="communicationService" fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)" showBusyCursor="true"/>
+		<s:CallResponder id="getAccount_locationByParentAccountIDResult"/>
+		<accountlocationservice:AccountlocationService id="accountlocationService" fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)" showBusyCursor="true"/>
+		
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.fiber.core.model_internal;
+			import com.adobe.serializers.utility.TypeUtility;			
+			import flash.net.*;			
+			import mx.controls.*;
+			import mx.core.mx_internal;
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.rpc.events.FaultEvent;			
+			import spark.events.IndexChangeEvent;
+			import flash.events.*;
+			import mx.collections.ArrayCollection;
+			import mx.events.MenuEvent;		
+			
+			public function menuBarItemClickHandler(event:MenuEvent):void {
+				switch(event.label){
+					case 'Create Account':
+						var urlReq:URLRequest = new URLRequest("createAccount.html");
+						navigateToURL(urlReq, "_self");
+						break;
+					case 'Create Communication':
+						var urlReq:URLRequest = new URLRequest("createCommunication.html");
+						navigateToURL(urlReq, "_self");
+						break;
+					case 'Create Account Person':
+						var urlReq:URLRequest = new URLRequest("createAccountPerson.html");
+						navigateToURL(urlReq, "_self");
+						break;
+					case 'Create Account Location':
+						var urlReq:URLRequest = new URLRequest("createAccountLocation.html");
+						navigateToURL(urlReq, "_self");
+						break;
+					case 'Create Contract':
+						var urlReq:URLRequest = new URLRequest("createContract.html");
+						navigateToURL(urlReq, "_self");
+						break;
+				}
+				
+			}
+			
+			private function send_data():void {
+				create_contract.send();
+			}
+			
+			
+			protected function serviceLevel_creationCompleteHandler(event:FlexEvent):void
+			{
+				getAllList_of_service_levelsResult.token = listofservicelevelsService.getAllList_of_service_levels();
+			}
+			
+			protected function parentAccount_creationCompleteHandler(event:FlexEvent):void
+			{
+				getAllAccountResult.token = accountService.getAllAccount();
+			}
+			
+			
+			protected function parentAccount_changeHandler(event:IndexChangeEvent):void
+			{
+				getCommunicationByParentAccountIDResult.token = communicationService.getCommunicationByParentAccountID(parentAccount.selectedItem.account_id);
+				sourceCommunication.enabled = true;
+				getAccount_locationByParentAccountIDResult.token = accountlocationService.getAccount_locationByParentAccountID(parentAccount.selectedItem.account_id);
+				locationName.enabled = true;
+			}
+			
+			
+			protected function createContract_faultHandler(event:FaultEvent):void
+			{
+				event.toString();// TODO Auto-generated method stub
+			}
+			
+		]]>
+	</fx:Script>	
+	
+	<mx:Form horizontalCenter="5" verticalCenter="-21">
+		<mx:FormHeading label="Create Contract" fontFamily="Verdana" fontSize="15"/>
+		
+		<mx:FormItem label="Account" fontFamily="Verdana" fontWeight="bold"
+					 verticalGap="20" indicatorGap="30" paddingTop="40">			
+			<s:DropDownList  id="parentAccount" width="200" fontFamily="Verdana" 
+							 prompt="Select an account" 
+							 creationComplete="parentAccount_creationCompleteHandler(event)" 
+							 labelField="account_name"
+							 change="parentAccount_changeHandler(event)">
+				<s:AsyncListView list="{getAllAccountResult.lastResult}"/>
+			</s:DropDownList>
+		</mx:FormItem>
+		<mx:FormItem label="Communication Source" fontFamily="Verdana" fontWeight="bold"
+					 verticalGap="12" indicatorGap="30">
+			<s:DropDownList  id="sourceCommunication" width="200" fontFamily="Verdana" 
+							 prompt="Select a source communication" 							 
+							 labelField="communication_title"
+							 enabled="false">
+				<s:AsyncListView list="{getCommunicationByParentAccountIDResult.lastResult}"/>
+			</s:DropDownList>
+		</mx:FormItem>
+		<mx:FormItem label="Location" fontFamily="Verdana" fontWeight="bold"
+					 verticalGap="12" indicatorGap="30">
+			<s:DropDownList  id="locationName" width="200" fontFamily="Verdana" 
+							 prompt="Select a location" 
+							 labelField="address1"
+							 enabled="false">
+				<s:AsyncListView list="{getAccount_locationByParentAccountIDResult.lastResult}"/>
+				
+			</s:DropDownList>
+		</mx:FormItem>
+		<mx:FormItem label="Service Level" fontFamily="Verdana" fontWeight="bold"
+					 verticalGap="12" indicatorGap="30">
+			<s:DropDownList  id="serviceLevel" width="200" fontFamily="Verdana" 
+							 prompt="Select a service level" 
+							 creationComplete="serviceLevel_creationCompleteHandler(event)" 
+							 labelField="level_of_contract"
+							 >
+				<s:AsyncListView list="{getAllList_of_service_levelsResult.lastResult}"/>
+				
+			</s:DropDownList>
+		</mx:FormItem>
+		<mx:FormItem direction="horizontal" paddingTop="30">
+			<s:Button id="btnSave" label="Save"  click="send_data()"/>
+			<s:Button  id="btnCancel" label="Cancel" />
+		</mx:FormItem>
+	</mx:Form>
+	
+	<mx:MenuBar id="bar" labelField="@label" itemClick="menuBarItemClickHandler(event)" x="325" y="74" height="39" width="305"  cornerRadius="20" fontFamily="Verdana" fontSize="13">
+		<fx:XMLList>
+			<menuitem label="Home"/>
+			<menuitem label="Sales">
+				<menuitem label="Create Account"  />
+				<menuitem label="Create Account Person" />
+				<menuitem label="Create Account Location" />
+				<menuitem label="Create Contract" />
+				<menuitem label="Create Communication" />
+				<!--<menuitem label="Delete Account" enabled="false"/>-->
+			</menuitem>
+			<menuitem label="Ticket">
+				<menuitem label="Create Ticket" />
+				<menuitem label="Ticket Status"/>
+			</menuitem>
+			<menuitem label="Finance"/>
+		</fx:XMLList>
+	</mx:MenuBar>
+	
+	<mx:HRule x="0" y="121" width="100%"/>
+</s:Application>
