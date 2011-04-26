@@ -1,0 +1,23 @@
+[RPC Fault faultString="Error #2070: Security sandbox violation: caller  cannot access Stage owned by ." faultCode="Client.CouldNotDecode" faultDetail="null"]
+	at mx.rpc.http::AbstractOperation/http://www.adobe.com/2006/flex/mx/internal::processResult()[E:\dev\4.x\frameworks\projects\rpc\src\mx\rpc\http\AbstractOperation.as:953]
+	at mx.rpc::AbstractInvoker/http://www.adobe.com/2006/flex/mx/internal::resultHandler()[E:\dev\4.x\frameworks\projects\rpc\src\mx\rpc\AbstractInvoker.as:313]
+	at mx.rpc::Responder/result()[E:\dev\4.x\frameworks\projects\rpc\src\mx\rpc\Responder.as:56]
+	at mx.rpc::AsyncRequest/acknowledge()[E:\dev\4.x\frameworks\projects\rpc\src\mx\rpc\AsyncRequest.as:84]
+	at DirectHTTPMessageResponder/completeHandler()[E:\dev\4.x\frameworks\projects\rpc\src\mx\messaging\channels\DirectHTTPChannel.as:446]
+	at flash.events::EventDispatcher/dispatchEventFunction()
+	at flash.events::EventDispatcher/dispatchEvent()
+	at flash.net::URLLoader/onComplete()
+	
+	[RPC Fault faultString="Error #2070: Security sandbox violation: caller  cannot access Stage owned by ." faultCode="Client.CouldNotDecode" faultDetail="null"]
+	at mx.rpc.http::AbstractOperation/http://www.adobe.com/2006/flex/mx/internal::processResult()[E:\dev\4.x\frameworks\projects\rpc\src\mx\rpc\http\AbstractOperation.as:953]
+	at mx.rpc::AbstractInvoker/http://www.adobe.com/2006/flex/mx/internal::resultHandler()[E:\dev\4.x\frameworks\projects\rpc\src\mx\rpc\AbstractInvoker.as:313]
+	at mx.rpc::Responder/result()[E:\dev\4.x\frameworks\projects\rpc\src\mx\rpc\Responder.as:56]
+	at mx.rpc::AsyncRequest/acknowledge()[E:\dev\4.x\frameworks\projects\rpc\src\mx\rpc\AsyncRequest.as:84]
+	at DirectHTTPMessageResponder/completeHandler()[E:\dev\4.x\frameworks\projects\rpc\src\mx\messaging\channels\DirectHTTPChannel.as:446]
+	at flash.events::EventDispatcher/dispatchEventFunction()
+	at flash.events::EventDispatcher/dispatchEvent()
+	at flash.net::URLLoader/onComplete()
+
+	
+	warning: unable to bind to property 'account_name' on class 'XML' (class is not an IEventDispatcher)
+[Unload SWF] /CRM-debug/customerCommunication.swf
