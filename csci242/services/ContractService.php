@@ -18,14 +18,14 @@
  *  information at http://www.adobe.com/go/flex_security
  *
  */
-class CustomerService {
+class ContractService {
 
 	var $username = "175192_crmtest";
 	var $password = "crmtestcsci242";
 	var $server = "mysql2.myregisteredsite.com";
 	var $port = "3306";
 	var $databasename = "175192_CRM_Test";
-	var $tablename = "customer";
+	var $tablename = "contract";
 
 	var $connection;
 
@@ -53,7 +53,7 @@ class CustomerService {
 	 *
 	 * @return array
 	 */
-	public function getAllCustomer() {
+	public function getAllContract() {
 
 		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename");		
 		$this->throwExceptionOnError();
@@ -63,13 +63,14 @@ class CustomerService {
 		
 		$rows = array();
 		
-		mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+		mysqli_stmt_bind_result($stmt, $row->contract_id, $row->established, $row->end, $row->service_name, $row->service_level, $row->account_id, $row->account_location_id, $row->price, $row->order_id);
 		
 	    while (mysqli_stmt_fetch($stmt)) {
-	      $row->date_entered = new DateTime($row->date_entered);
+	      $row->established = new DateTime($row->established);
+	      $row->end = new DateTime($row->end);
 	      $rows[] = $row;
 	      $row = new stdClass();
-	      mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+	      mysqli_stmt_bind_result($stmt, $row->contract_id, $row->established, $row->end, $row->service_name, $row->service_level, $row->account_id, $row->account_location_id, $row->price, $row->order_id);
 	    }
 		
 		mysqli_stmt_free_result($stmt);
@@ -86,9 +87,9 @@ class CustomerService {
 	 * 
 	 * @return stdClass
 	 */
-	public function getCustomerByID($itemID) {
+	public function getContractByID($itemID) {
 		
-		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename where customer_id=?");
+		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename where contract_id=?");
 		$this->throwExceptionOnError();
 		
 		mysqli_stmt_bind_param($stmt, 'i', $itemID);		
@@ -97,10 +98,11 @@ class CustomerService {
 		mysqli_stmt_execute($stmt);
 		$this->throwExceptionOnError();
 		
-		mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+		mysqli_stmt_bind_result($stmt, $row->contract_id, $row->established, $row->end, $row->service_name, $row->service_level, $row->account_id, $row->account_location_id, $row->price, $row->order_id);
 		
 		if(mysqli_stmt_fetch($stmt)) {
-	      $row->date_entered = new DateTime($row->date_entered);
+	      $row->established = new DateTime($row->established);
+	      $row->end = new DateTime($row->end);
 	      return $row;
 		} else {
 	      return null;
@@ -115,12 +117,12 @@ class CustomerService {
 	 * 
 	 * @return stdClass
 	 */
-	public function createCustomer($item) {
+	public function createContract($item) {
 
-		$stmt = mysqli_prepare($this->connection, "INSERT INTO $this->tablename (customer_name, website, date_entered, customer_type, status) VALUES (?, ?, ?, ?, ?)");
+		$stmt = mysqli_prepare($this->connection, "INSERT INTO $this->tablename (established, end, service_name, service_level, account_id, account_location_id, price, order_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 		$this->throwExceptionOnError();
 
-		mysqli_stmt_bind_param($stmt, 'sssss', $item->customer_name, $item->website, $item->date_entered->toString('YYYY-MM-dd HH:mm:ss'), $item->customer_type, $item->status);
+		mysqli_stmt_bind_param($stmt, 'ssssiiii', $item->established->toString('YYYY-MM-dd HH:mm:ss'), $item->end->toString('YYYY-MM-dd HH:mm:ss'), $item->service_name, $item->service_level, $item->account_id, $item->account_location_id, $item->price, $item->order_id);
 		$this->throwExceptionOnError();
 
 		mysqli_stmt_execute($stmt);		
@@ -142,12 +144,12 @@ class CustomerService {
 	 * @param stdClass $item
 	 * @return void
 	 */
-	public function updateCustomer($item) {
+	public function updateContract($item) {
 	
-		$stmt = mysqli_prepare($this->connection, "UPDATE $this->tablename SET customer_name=?, website=?, date_entered=?, customer_type=?, status=? WHERE customer_id=?");		
+		$stmt = mysqli_prepare($this->connection, "UPDATE $this->tablename SET established=?, end=?, service_name=?, service_level=?, account_id=?, account_location_id=?, price=?, order_id=? WHERE contract_id=?");		
 		$this->throwExceptionOnError();
 		
-		mysqli_stmt_bind_param($stmt, 'sssssi', $item->customer_name, $item->website, $item->date_entered->toString('YYYY-MM-dd HH:mm:ss'), $item->customer_type, $item->status, $item->customer_id);		
+		mysqli_stmt_bind_param($stmt, 'ssssiiiii', $item->established->toString('YYYY-MM-dd HH:mm:ss'), $item->end->toString('YYYY-MM-dd HH:mm:ss'), $item->service_name, $item->service_level, $item->account_id, $item->account_location_id, $item->price, $item->order_id, $item->contract_id);		
 		$this->throwExceptionOnError();
 
 		mysqli_stmt_execute($stmt);		
@@ -166,9 +168,9 @@ class CustomerService {
 	 * 
 	 * @return void
 	 */
-	public function deleteCustomer($itemID) {
+	public function deleteContract($itemID) {
 				
-		$stmt = mysqli_prepare($this->connection, "DELETE FROM $this->tablename WHERE customer_id = ?");
+		$stmt = mysqli_prepare($this->connection, "DELETE FROM $this->tablename WHERE contract_id = ?");
 		$this->throwExceptionOnError();
 		
 		mysqli_stmt_bind_param($stmt, 'i', $itemID);
@@ -217,7 +219,7 @@ class CustomerService {
 	 * 
 	 * @return array
 	 */
-	public function getCustomer_paged($startIndex, $numItems) {
+	public function getContract_paged($startIndex, $numItems) {
 		
 		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename LIMIT ?, ?");
 		$this->throwExceptionOnError();
@@ -228,13 +230,14 @@ class CustomerService {
 		
 		$rows = array();
 		
-		mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+		mysqli_stmt_bind_result($stmt, $row->contract_id, $row->established, $row->end, $row->service_name, $row->service_level, $row->account_id, $row->account_location_id, $row->price, $row->order_id);
 		
 	    while (mysqli_stmt_fetch($stmt)) {
-	      $row->date_entered = new DateTime($row->date_entered);
+	      $row->established = new DateTime($row->established);
+	      $row->end = new DateTime($row->end);
 	      $rows[] = $row;
 	      $row = new stdClass();
-	      mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+	      mysqli_stmt_bind_result($stmt, $row->contract_id, $row->established, $row->end, $row->service_name, $row->service_level, $row->account_id, $row->account_location_id, $row->price, $row->order_id);
 	    }
 		
 		mysqli_stmt_free_result($stmt);		

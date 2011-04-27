@@ -18,16 +18,49 @@
  *  information at http://www.adobe.com/go/flex_security
  *
  */
-class CustomerService {
+class TicketService {
 
 	var $username = "175192_crmtest";
 	var $password = "crmtestcsci242";
 	var $server = "mysql2.myregisteredsite.com";
 	var $port = "3306";
 	var $databasename = "175192_CRM_Test";
-	var $tablename = "customer";
+	var $tablename = "ticket";
 
 	var $connection;
+	
+	/**
+	 * Returns the rows from the table of all the closed tickets.
+	 *
+	 * Add authroization or any logical checks for secure access to your data 
+	 *
+	 * @return array
+	 */
+	public function getAllTicketClosed() {
+
+		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename where ticket_status='Closed'");		
+		$this->throwExceptionOnError();
+		
+		mysqli_stmt_execute($stmt);
+		$this->throwExceptionOnError();
+		
+		$rows = array();
+		
+		mysqli_stmt_bind_result($stmt, $row->ticket_id, $row->customer_priority, $row->ticket_description, $row->ticket_summary, $row->created_date, $row->created_by_agent, $row->ticket_type, $row->requested_completion, $row->assigned_to, $row->contact_id, $row->customer_location_id, $row->ticket_status);
+		
+	    while (mysqli_stmt_fetch($stmt)) {
+	      $row->created_date = new DateTime($row->created_date);
+	      $row->requested_completion = new DateTime($row->requested_completion);
+	      $rows[] = $row;
+	      $row = new stdClass();
+	      mysqli_stmt_bind_result($stmt, $row->ticket_id, $row->customer_priority, $row->ticket_description, $row->ticket_summary, $row->created_date, $row->created_by_agent, $row->ticket_type, $row->requested_completion, $row->assigned_to, $row->contact_id, $row->customer_location_id, $row->ticket_status);
+	    }
+		
+		mysqli_stmt_free_result($stmt);
+	    mysqli_close($this->connection);
+	
+	    return $rows;
+	}
 
 	/**
 	 * The constructor initializes the connection to database. Everytime a request is 
@@ -53,7 +86,7 @@ class CustomerService {
 	 *
 	 * @return array
 	 */
-	public function getAllCustomer() {
+	public function getAllTicket() {
 
 		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename");		
 		$this->throwExceptionOnError();
@@ -63,13 +96,14 @@ class CustomerService {
 		
 		$rows = array();
 		
-		mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+		mysqli_stmt_bind_result($stmt, $row->ticket_id, $row->customer_priority, $row->ticket_description, $row->ticket_summary, $row->created_date, $row->created_by_agent, $row->ticket_type, $row->requested_completion, $row->assigned_to, $row->contact_id, $row->customer_location_id, $row->ticket_status);
 		
 	    while (mysqli_stmt_fetch($stmt)) {
-	      $row->date_entered = new DateTime($row->date_entered);
+	      $row->created_date = new DateTime($row->created_date);
+	      $row->requested_completion = new DateTime($row->requested_completion);
 	      $rows[] = $row;
 	      $row = new stdClass();
-	      mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+	      mysqli_stmt_bind_result($stmt, $row->ticket_id, $row->customer_priority, $row->ticket_description, $row->ticket_summary, $row->created_date, $row->created_by_agent, $row->ticket_type, $row->requested_completion, $row->assigned_to, $row->contact_id, $row->customer_location_id, $row->ticket_status);
 	    }
 		
 		mysqli_stmt_free_result($stmt);
@@ -86,9 +120,9 @@ class CustomerService {
 	 * 
 	 * @return stdClass
 	 */
-	public function getCustomerByID($itemID) {
+	public function getTicketByID($itemID) {
 		
-		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename where customer_id=?");
+		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename where ticket_id=?");
 		$this->throwExceptionOnError();
 		
 		mysqli_stmt_bind_param($stmt, 'i', $itemID);		
@@ -97,10 +131,11 @@ class CustomerService {
 		mysqli_stmt_execute($stmt);
 		$this->throwExceptionOnError();
 		
-		mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+		mysqli_stmt_bind_result($stmt, $row->ticket_id, $row->customer_priority, $row->ticket_description, $row->ticket_summary, $row->created_date, $row->created_by_agent, $row->ticket_type, $row->requested_completion, $row->assigned_to, $row->contact_id, $row->customer_location_id, $row->ticket_status);
 		
 		if(mysqli_stmt_fetch($stmt)) {
-	      $row->date_entered = new DateTime($row->date_entered);
+	      $row->created_date = new DateTime($row->created_date);
+	      $row->requested_completion = new DateTime($row->requested_completion);
 	      return $row;
 		} else {
 	      return null;
@@ -115,12 +150,12 @@ class CustomerService {
 	 * 
 	 * @return stdClass
 	 */
-	public function createCustomer($item) {
+	public function createTicket($item) {
 
-		$stmt = mysqli_prepare($this->connection, "INSERT INTO $this->tablename (customer_name, website, date_entered, customer_type, status) VALUES (?, ?, ?, ?, ?)");
+		$stmt = mysqli_prepare($this->connection, "INSERT INTO $this->tablename (customer_priority, ticket_description, ticket_summary, created_date, created_by_agent, ticket_type, requested_completion, assigned_to, contact_id, customer_location_id, ticket_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		$this->throwExceptionOnError();
 
-		mysqli_stmt_bind_param($stmt, 'sssss', $item->customer_name, $item->website, $item->date_entered->toString('YYYY-MM-dd HH:mm:ss'), $item->customer_type, $item->status);
+		mysqli_stmt_bind_param($stmt, 'ssssissiiis', $item->customer_priority, $item->ticket_description, $item->ticket_summary, $item->created_date->toString('YYYY-MM-dd HH:mm:ss'), $item->created_by_agent, $item->ticket_type, $item->requested_completion->toString('YYYY-MM-dd HH:mm:ss'), $item->assigned_to, $item->contact_id, $item->customer_location_id, $item->ticket_status);
 		$this->throwExceptionOnError();
 
 		mysqli_stmt_execute($stmt);		
@@ -142,12 +177,12 @@ class CustomerService {
 	 * @param stdClass $item
 	 * @return void
 	 */
-	public function updateCustomer($item) {
+	public function updateTicket($item) {
 	
-		$stmt = mysqli_prepare($this->connection, "UPDATE $this->tablename SET customer_name=?, website=?, date_entered=?, customer_type=?, status=? WHERE customer_id=?");		
+		$stmt = mysqli_prepare($this->connection, "UPDATE $this->tablename SET customer_priority=?, ticket_description=?, ticket_summary=?, created_date=?, created_by_agent=?, ticket_type=?, requested_completion=?, assigned_to=?, contact_id=?, customer_location_id=?, ticket_status=? WHERE ticket_id=?");		
 		$this->throwExceptionOnError();
 		
-		mysqli_stmt_bind_param($stmt, 'sssssi', $item->customer_name, $item->website, $item->date_entered->toString('YYYY-MM-dd HH:mm:ss'), $item->customer_type, $item->status, $item->customer_id);		
+		mysqli_stmt_bind_param($stmt, 'ssssissiiisi', $item->customer_priority, $item->ticket_description, $item->ticket_summary, $item->created_date->toString('YYYY-MM-dd HH:mm:ss'), $item->created_by_agent, $item->ticket_type, $item->requested_completion->toString('YYYY-MM-dd HH:mm:ss'), $item->assigned_to, $item->contact_id, $item->customer_location_id, $item->ticket_status, $item->ticket_id);		
 		$this->throwExceptionOnError();
 
 		mysqli_stmt_execute($stmt);		
@@ -166,9 +201,9 @@ class CustomerService {
 	 * 
 	 * @return void
 	 */
-	public function deleteCustomer($itemID) {
+	public function deleteTicket($itemID) {
 				
-		$stmt = mysqli_prepare($this->connection, "DELETE FROM $this->tablename WHERE customer_id = ?");
+		$stmt = mysqli_prepare($this->connection, "DELETE FROM $this->tablename WHERE ticket_id = ?");
 		$this->throwExceptionOnError();
 		
 		mysqli_stmt_bind_param($stmt, 'i', $itemID);
@@ -217,7 +252,7 @@ class CustomerService {
 	 * 
 	 * @return array
 	 */
-	public function getCustomer_paged($startIndex, $numItems) {
+	public function getTicket_paged($startIndex, $numItems) {
 		
 		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename LIMIT ?, ?");
 		$this->throwExceptionOnError();
@@ -228,13 +263,14 @@ class CustomerService {
 		
 		$rows = array();
 		
-		mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+		mysqli_stmt_bind_result($stmt, $row->ticket_id, $row->customer_priority, $row->ticket_description, $row->ticket_summary, $row->created_date, $row->created_by_agent, $row->ticket_type, $row->requested_completion, $row->assigned_to, $row->contact_id, $row->customer_location_id, $row->ticket_status);
 		
 	    while (mysqli_stmt_fetch($stmt)) {
-	      $row->date_entered = new DateTime($row->date_entered);
+	      $row->created_date = new DateTime($row->created_date);
+	      $row->requested_completion = new DateTime($row->requested_completion);
 	      $rows[] = $row;
 	      $row = new stdClass();
-	      mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+	      mysqli_stmt_bind_result($stmt, $row->ticket_id, $row->customer_priority, $row->ticket_description, $row->ticket_summary, $row->created_date, $row->created_by_agent, $row->ticket_type, $row->requested_completion, $row->assigned_to, $row->contact_id, $row->customer_location_id, $row->ticket_status);
 	    }
 		
 		mysqli_stmt_free_result($stmt);		
