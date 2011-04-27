@@ -22,16 +22,13 @@ $service_name = $_POST["service_name"];
 // Description
 $description = $_POST["description"];
 //$description = 'ABCDEF';
-// Price_Per_Hour
-$price_per_hour = $_POST["price_per_hour"];
-//$price_per_hour = '2';
 //Selected_Service_Name
 $selected_service_name = $_POST["selected_service_name"];
 //selected_service_name = 'ABC';
 // prepare the sql statements
 //Service
-	$sql = "UPDATE service SET service_name='$service_name',description='$description', 
-	price_per_hour=$price_per_hour WHERE service_name='$selected_service_name';";
+	$sql = "UPDATE service SET service_name='$service_name',description='$description' 
+	WHERE service_name='$selected_service_name';";
 	echo $sql;
     $affectedRows = $db->update($sql);
 	echo $affectedRows;

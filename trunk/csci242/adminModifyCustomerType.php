@@ -17,20 +17,18 @@ $db = new Database();
 $db_name = "175192_CRM_Test";
 //SET UP VARIABLES
 // Service_Name
-$service_name = $_POST["service_name"];
-//$service_name = "PC value";
-// Description
-$description = $_POST["description"];
-//$description = "afjlkaj";
-
-
-
+$customer_type = $_POST["customer_type"];
+$selected_customer_type = $_POST["selected_customer_type"];
 
 // prepare the sql statements
 //Service
-$sql_service = "INSERT INTO ".$db_name.".service VALUES ('".$service_name."',null, '".$description."');";
-$db->insert($sql_service);
+	$sql = "UPDATE customer_type SET customer_type='$customer_type' 
+	WHERE customer_type='$selected_customer_type';";
+	echo $sql;
+    $affectedRows = $db->update($sql);
+	echo $affectedRows;
+
 //echo $sql_account ."\n<br>";
-echo $sql_service;
+
 
 ?>

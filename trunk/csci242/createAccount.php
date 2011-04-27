@@ -57,10 +57,11 @@ $user_name = $first_name."_".$last_name;
 $user_pwd = md5($first_name.$last_name);
 // prepare the sql statements
 // Account 
-if ($account_type == "Lead")
-	$sql_account = "INSERT INTO ".$db_name.".customer VALUES (null, '".$account_name."', '".$website."', '".$datetime."', null,'".$customer_type."');"; 
-else
-	$sql_account = "INSERT INTO ".$db_name.".customer VALUES (null, '".$account_name."', '".$website."', null, '".$datetime."','".$customer_type."');"; 
+//if ($account_type == "Lead")
+	//$sql_account = "INSERT INTO ".$db_name.".customer VALUES (null, '".$account_name."', '".$website."', '".$datetime."', null,'".$customer_type."');"; 
+//else
+	//$sql_account = "INSERT INTO ".$db_name.".customer VALUES (null, '".$account_name."', '".$website."', null, '".$datetime."','".$customer_type."');"; 
+$sql_account = "INSERT INTO ".$db_name.".customer VALUES (null, '".$account_name."', '".$website."', '".$datetime."','".$customer_type."', '".$account_type."');";	
 $account_id = $db->insert($sql_account);
 echo $sql_account."\n<br>";
 

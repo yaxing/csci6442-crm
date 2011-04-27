@@ -21,13 +21,13 @@ session_start();
 if(true) {
 	$user_name = $_POST['username'];//"admin";//
 	$user_pwd = $_POST['password'];//"dkd";//
-	//$user_name = "Sharvani";
-	//$user_pwd = "Tota";
+	//$user_name = "agent";
+	//$user_pwd = "agent";
 	/*$sql = "insert into contact_type values('".$user_name."')";
 	$affectedRow = $db->update($sql);
 	die();*/
-	$sql_cust = "SELECT contact_id FROM contact WHERE user_name='".$user_name."' AND user_pwd='".($user_pwd)."';";
-	$sql_worker = "SELECT worker_id FROM worker WHERE user_name='".$user_name."' AND user_pwd='".($user_pwd)."';";
+	$sql_cust = "SELECT contact_id,first_name FROM contact WHERE user_name='".$user_name."' AND user_pwd='".($user_pwd)."';";
+	$sql_worker = "SELECT agent_id,first_name FROM agent WHERE user_name='".$user_name."' AND user_pwd='".($user_pwd)."';";
 	$db->select($sql_cust);
 	$result_cust = $db->fetchIndexArray();
 	//var_dump($result_cust);
@@ -40,7 +40,8 @@ if(true) {
 		}
 		else{
 			$user_id = $result_worker[0][0]; // found a worker_id in worker!
-			$sql_role = "SELECT role_type FROM role WHERE worker_id=".$user_id.";"; // role of the worker
+			$name = $result_worker[0][1];
+			$sql_role = "SELECT role_type FROM role WHERE agent_id=".$user_id.";"; // role of the worker
 			$db->select($sql_role);
 			$result_role = $db->fetchIndexArray();
 			if (empty($result_role)){
@@ -50,11 +51,12 @@ if(true) {
 			for ($i = 1; $i < count($result_role); $i++){
 				$user_role .= "::".$result_role[$i][0];
 			}
-			echo "<br/> worker_id: ".$user_id." <br/> role:".$user_role;
+			echo "<br/> agent_id: ".$user_id." <br/> role:".$user_role;
 		}
 	}	
 	else{
 		$user_id = $result_cust[0][0]; // found a user_id in account_person!
+		$name = $result_cust[0][1];
 		$user_role = "account_person"; // role for account_person!
 		echo "<br/> contact_id: ".$user_id." <br/> person_role:".$user_role;
 	}
@@ -82,4 +84,6 @@ if(true) {
 else {
     echo 'You must supply a username and password.';
 }
+//echo $name;
+echo '<name>'.$name."</name>\n";
 ?>
