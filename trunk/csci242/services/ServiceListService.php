@@ -26,6 +26,13 @@ class ServiceListService {
 	var $port = "3306";
 	var $databasename = "175192_CRM_Test";
 	var $tablename = "service";
+	
+	//var $username = "root";
+	//var $password = "";
+	//var $server = "localhost";
+	//var $port = "3306";
+	//var $databasename = "175192_CRM_Test";
+	//var $tablename = "service";
 
 	var $connection;
 

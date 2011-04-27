@@ -18,14 +18,14 @@
  *  information at http://www.adobe.com/go/flex_security
  *
  */
-class CustomerService {
+class ServicelevelsService {
 
 	var $username = "175192_crmtest";
 	var $password = "crmtestcsci242";
 	var $server = "mysql2.myregisteredsite.com";
 	var $port = "3306";
 	var $databasename = "175192_CRM_Test";
-	var $tablename = "customer";
+	var $tablename = "service_levels";
 
 	var $connection;
 
@@ -53,7 +53,7 @@ class CustomerService {
 	 *
 	 * @return array
 	 */
-	public function getAllCustomer() {
+	public function getAllService_levels() {
 
 		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename");		
 		$this->throwExceptionOnError();
@@ -63,13 +63,12 @@ class CustomerService {
 		
 		$rows = array();
 		
-		mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+		mysqli_stmt_bind_result($stmt, $row->service_level, $row->discount_given);
 		
 	    while (mysqli_stmt_fetch($stmt)) {
-	      $row->date_entered = new DateTime($row->date_entered);
 	      $rows[] = $row;
 	      $row = new stdClass();
-	      mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+	      mysqli_stmt_bind_result($stmt, $row->service_level, $row->discount_given);
 	    }
 		
 		mysqli_stmt_free_result($stmt);
@@ -86,9 +85,9 @@ class CustomerService {
 	 * 
 	 * @return stdClass
 	 */
-	public function getCustomerByID($itemID) {
+	public function getService_levelsByID($itemID) {
 		
-		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename where customer_id=?");
+		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename where service_level=?");
 		$this->throwExceptionOnError();
 		
 		mysqli_stmt_bind_param($stmt, 'i', $itemID);		
@@ -97,10 +96,9 @@ class CustomerService {
 		mysqli_stmt_execute($stmt);
 		$this->throwExceptionOnError();
 		
-		mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+		mysqli_stmt_bind_result($stmt, $row->service_level, $row->discount_given);
 		
 		if(mysqli_stmt_fetch($stmt)) {
-	      $row->date_entered = new DateTime($row->date_entered);
 	      return $row;
 		} else {
 	      return null;
@@ -115,18 +113,18 @@ class CustomerService {
 	 * 
 	 * @return stdClass
 	 */
-	public function createCustomer($item) {
+	public function createService_levels($item) {
 
-		$stmt = mysqli_prepare($this->connection, "INSERT INTO $this->tablename (customer_name, website, date_entered, customer_type, status) VALUES (?, ?, ?, ?, ?)");
+		$stmt = mysqli_prepare($this->connection, "INSERT INTO $this->tablename (service_level, discount_given) VALUES (?, ?)");
 		$this->throwExceptionOnError();
 
-		mysqli_stmt_bind_param($stmt, 'sssss', $item->customer_name, $item->website, $item->date_entered->toString('YYYY-MM-dd HH:mm:ss'), $item->customer_type, $item->status);
+		mysqli_stmt_bind_param($stmt, 'sd', $item->service_level, $item->discount_given);
 		$this->throwExceptionOnError();
 
 		mysqli_stmt_execute($stmt);		
 		$this->throwExceptionOnError();
 
-		$autoid = mysqli_stmt_insert_id($stmt);
+		$autoid = $item->service_level;
 
 		mysqli_stmt_free_result($stmt);		
 		mysqli_close($this->connection);
@@ -142,12 +140,12 @@ class CustomerService {
 	 * @param stdClass $item
 	 * @return void
 	 */
-	public function updateCustomer($item) {
+	public function updateService_levels($item) {
 	
-		$stmt = mysqli_prepare($this->connection, "UPDATE $this->tablename SET customer_name=?, website=?, date_entered=?, customer_type=?, status=? WHERE customer_id=?");		
+		$stmt = mysqli_prepare($this->connection, "UPDATE $this->tablename SET discount_given=? WHERE service_level=?");		
 		$this->throwExceptionOnError();
 		
-		mysqli_stmt_bind_param($stmt, 'sssssi', $item->customer_name, $item->website, $item->date_entered->toString('YYYY-MM-dd HH:mm:ss'), $item->customer_type, $item->status, $item->customer_id);		
+		mysqli_stmt_bind_param($stmt, 'ds', $item->discount_given, $item->service_level);		
 		$this->throwExceptionOnError();
 
 		mysqli_stmt_execute($stmt);		
@@ -166,12 +164,12 @@ class CustomerService {
 	 * 
 	 * @return void
 	 */
-	public function deleteCustomer($itemID) {
+	public function deleteService_levels($itemID) {
 				
-		$stmt = mysqli_prepare($this->connection, "DELETE FROM $this->tablename WHERE customer_id = ?");
+		$stmt = mysqli_prepare($this->connection, "DELETE FROM $this->tablename WHERE service_level = ?");
 		$this->throwExceptionOnError();
 		
-		mysqli_stmt_bind_param($stmt, 'i', $itemID);
+		mysqli_stmt_bind_param($stmt, 's', $itemID);
 		mysqli_stmt_execute($stmt);
 		$this->throwExceptionOnError();
 		
@@ -217,7 +215,7 @@ class CustomerService {
 	 * 
 	 * @return array
 	 */
-	public function getCustomer_paged($startIndex, $numItems) {
+	public function getService_levels_paged($startIndex, $numItems) {
 		
 		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename LIMIT ?, ?");
 		$this->throwExceptionOnError();
@@ -228,13 +226,12 @@ class CustomerService {
 		
 		$rows = array();
 		
-		mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+		mysqli_stmt_bind_result($stmt, $row->service_level, $row->discount_given);
 		
 	    while (mysqli_stmt_fetch($stmt)) {
-	      $row->date_entered = new DateTime($row->date_entered);
 	      $rows[] = $row;
 	      $row = new stdClass();
-	      mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+	      mysqli_stmt_bind_result($stmt, $row->service_level, $row->discount_given);
 	    }
 		
 		mysqli_stmt_free_result($stmt);		

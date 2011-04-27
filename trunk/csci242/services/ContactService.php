@@ -18,14 +18,14 @@
  *  information at http://www.adobe.com/go/flex_security
  *
  */
-class CustomerService {
+class ContactService {
 
 	var $username = "175192_crmtest";
 	var $password = "crmtestcsci242";
 	var $server = "mysql2.myregisteredsite.com";
 	var $port = "3306";
 	var $databasename = "175192_CRM_Test";
-	var $tablename = "customer";
+	var $tablename = "contact";
 
 	var $connection;
 
@@ -53,7 +53,7 @@ class CustomerService {
 	 *
 	 * @return array
 	 */
-	public function getAllCustomer() {
+	public function getAllContact() {
 
 		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename");		
 		$this->throwExceptionOnError();
@@ -63,13 +63,12 @@ class CustomerService {
 		
 		$rows = array();
 		
-		mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+		mysqli_stmt_bind_result($stmt, $row->contact_id, $row->customer, $row->contact_title, $row->first_name, $row->last_name, $row->user_name, $row->user_pwd, $row->subscribed_to_newsletter);
 		
 	    while (mysqli_stmt_fetch($stmt)) {
-	      $row->date_entered = new DateTime($row->date_entered);
 	      $rows[] = $row;
 	      $row = new stdClass();
-	      mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+	      mysqli_stmt_bind_result($stmt, $row->contact_id, $row->customer, $row->contact_title, $row->first_name, $row->last_name, $row->user_name, $row->user_pwd, $row->subscribed_to_newsletter);
 	    }
 		
 		mysqli_stmt_free_result($stmt);
@@ -86,9 +85,9 @@ class CustomerService {
 	 * 
 	 * @return stdClass
 	 */
-	public function getCustomerByID($itemID) {
+	public function getContactByID($itemID) {
 		
-		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename where customer_id=?");
+		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename where contact_id=?");
 		$this->throwExceptionOnError();
 		
 		mysqli_stmt_bind_param($stmt, 'i', $itemID);		
@@ -97,10 +96,9 @@ class CustomerService {
 		mysqli_stmt_execute($stmt);
 		$this->throwExceptionOnError();
 		
-		mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+		mysqli_stmt_bind_result($stmt, $row->contact_id, $row->customer, $row->contact_title, $row->first_name, $row->last_name, $row->user_name, $row->user_pwd, $row->subscribed_to_newsletter);
 		
 		if(mysqli_stmt_fetch($stmt)) {
-	      $row->date_entered = new DateTime($row->date_entered);
 	      return $row;
 		} else {
 	      return null;
@@ -115,12 +113,12 @@ class CustomerService {
 	 * 
 	 * @return stdClass
 	 */
-	public function createCustomer($item) {
+	public function createContact($item) {
 
-		$stmt = mysqli_prepare($this->connection, "INSERT INTO $this->tablename (customer_name, website, date_entered, customer_type, status) VALUES (?, ?, ?, ?, ?)");
+		$stmt = mysqli_prepare($this->connection, "INSERT INTO $this->tablename (customer, contact_title, first_name, last_name, user_name, user_pwd, subscribed_to_newsletter) VALUES (?, ?, ?, ?, ?, ?, ?)");
 		$this->throwExceptionOnError();
 
-		mysqli_stmt_bind_param($stmt, 'sssss', $item->customer_name, $item->website, $item->date_entered->toString('YYYY-MM-dd HH:mm:ss'), $item->customer_type, $item->status);
+		mysqli_stmt_bind_param($stmt, 'issssss', $item->customer, $item->contact_title, $item->first_name, $item->last_name, $item->user_name, $item->user_pwd, $item->subscribed_to_newsletter);
 		$this->throwExceptionOnError();
 
 		mysqli_stmt_execute($stmt);		
@@ -142,12 +140,12 @@ class CustomerService {
 	 * @param stdClass $item
 	 * @return void
 	 */
-	public function updateCustomer($item) {
+	public function updateContact($item) {
 	
-		$stmt = mysqli_prepare($this->connection, "UPDATE $this->tablename SET customer_name=?, website=?, date_entered=?, customer_type=?, status=? WHERE customer_id=?");		
+		$stmt = mysqli_prepare($this->connection, "UPDATE $this->tablename SET customer=?, contact_title=?, first_name=?, last_name=?, user_name=?, user_pwd=?, subscribed_to_newsletter=? WHERE contact_id=?");		
 		$this->throwExceptionOnError();
 		
-		mysqli_stmt_bind_param($stmt, 'sssssi', $item->customer_name, $item->website, $item->date_entered->toString('YYYY-MM-dd HH:mm:ss'), $item->customer_type, $item->status, $item->customer_id);		
+		mysqli_stmt_bind_param($stmt, 'issssssi', $item->customer, $item->contact_title, $item->first_name, $item->last_name, $item->user_name, $item->user_pwd, $item->subscribed_to_newsletter, $item->contact_id);		
 		$this->throwExceptionOnError();
 
 		mysqli_stmt_execute($stmt);		
@@ -166,9 +164,9 @@ class CustomerService {
 	 * 
 	 * @return void
 	 */
-	public function deleteCustomer($itemID) {
+	public function deleteContact($itemID) {
 				
-		$stmt = mysqli_prepare($this->connection, "DELETE FROM $this->tablename WHERE customer_id = ?");
+		$stmt = mysqli_prepare($this->connection, "DELETE FROM $this->tablename WHERE contact_id = ?");
 		$this->throwExceptionOnError();
 		
 		mysqli_stmt_bind_param($stmt, 'i', $itemID);
@@ -217,7 +215,7 @@ class CustomerService {
 	 * 
 	 * @return array
 	 */
-	public function getCustomer_paged($startIndex, $numItems) {
+	public function getContact_paged($startIndex, $numItems) {
 		
 		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename LIMIT ?, ?");
 		$this->throwExceptionOnError();
@@ -228,13 +226,12 @@ class CustomerService {
 		
 		$rows = array();
 		
-		mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+		mysqli_stmt_bind_result($stmt, $row->contact_id, $row->customer, $row->contact_title, $row->first_name, $row->last_name, $row->user_name, $row->user_pwd, $row->subscribed_to_newsletter);
 		
 	    while (mysqli_stmt_fetch($stmt)) {
-	      $row->date_entered = new DateTime($row->date_entered);
 	      $rows[] = $row;
 	      $row = new stdClass();
-	      mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+	      mysqli_stmt_bind_result($stmt, $row->contact_id, $row->customer, $row->contact_title, $row->first_name, $row->last_name, $row->user_name, $row->user_pwd, $row->subscribed_to_newsletter);
 	    }
 		
 		mysqli_stmt_free_result($stmt);		

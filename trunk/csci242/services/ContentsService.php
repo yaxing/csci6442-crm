@@ -18,14 +18,14 @@
  *  information at http://www.adobe.com/go/flex_security
  *
  */
-class CustomerService {
+class ContentsService {
 
 	var $username = "175192_crmtest";
 	var $password = "crmtestcsci242";
 	var $server = "mysql2.myregisteredsite.com";
 	var $port = "3306";
 	var $databasename = "175192_CRM_Test";
-	var $tablename = "customer";
+	var $tablename = "contents";
 
 	var $connection;
 
@@ -53,7 +53,7 @@ class CustomerService {
 	 *
 	 * @return array
 	 */
-	public function getAllCustomer() {
+	public function getAllContents() {
 
 		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename");		
 		$this->throwExceptionOnError();
@@ -63,13 +63,12 @@ class CustomerService {
 		
 		$rows = array();
 		
-		mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+		mysqli_stmt_bind_result($stmt, $row->type_of_content);
 		
 	    while (mysqli_stmt_fetch($stmt)) {
-	      $row->date_entered = new DateTime($row->date_entered);
 	      $rows[] = $row;
 	      $row = new stdClass();
-	      mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+	      mysqli_stmt_bind_result($stmt, $row->type_of_content);
 	    }
 		
 		mysqli_stmt_free_result($stmt);
@@ -86,9 +85,9 @@ class CustomerService {
 	 * 
 	 * @return stdClass
 	 */
-	public function getCustomerByID($itemID) {
+	public function getContentsByID($itemID) {
 		
-		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename where customer_id=?");
+		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename where type_of_content=?");
 		$this->throwExceptionOnError();
 		
 		mysqli_stmt_bind_param($stmt, 'i', $itemID);		
@@ -97,10 +96,9 @@ class CustomerService {
 		mysqli_stmt_execute($stmt);
 		$this->throwExceptionOnError();
 		
-		mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+		mysqli_stmt_bind_result($stmt, $row->type_of_content);
 		
 		if(mysqli_stmt_fetch($stmt)) {
-	      $row->date_entered = new DateTime($row->date_entered);
 	      return $row;
 		} else {
 	      return null;
@@ -115,18 +113,18 @@ class CustomerService {
 	 * 
 	 * @return stdClass
 	 */
-	public function createCustomer($item) {
+	public function createContents($item) {
 
-		$stmt = mysqli_prepare($this->connection, "INSERT INTO $this->tablename (customer_name, website, date_entered, customer_type, status) VALUES (?, ?, ?, ?, ?)");
+		$stmt = mysqli_prepare($this->connection, "INSERT INTO $this->tablename (type_of_content) VALUES (?)");
 		$this->throwExceptionOnError();
 
-		mysqli_stmt_bind_param($stmt, 'sssss', $item->customer_name, $item->website, $item->date_entered->toString('YYYY-MM-dd HH:mm:ss'), $item->customer_type, $item->status);
+		mysqli_stmt_bind_param($stmt, 's', $item->type_of_content);
 		$this->throwExceptionOnError();
 
 		mysqli_stmt_execute($stmt);		
 		$this->throwExceptionOnError();
 
-		$autoid = mysqli_stmt_insert_id($stmt);
+		$autoid = $item->type_of_content;
 
 		mysqli_stmt_free_result($stmt);		
 		mysqli_close($this->connection);
@@ -142,12 +140,12 @@ class CustomerService {
 	 * @param stdClass $item
 	 * @return void
 	 */
-	public function updateCustomer($item) {
+	public function updateContents($item) {
 	
-		$stmt = mysqli_prepare($this->connection, "UPDATE $this->tablename SET customer_name=?, website=?, date_entered=?, customer_type=?, status=? WHERE customer_id=?");		
+		$stmt = mysqli_prepare($this->connection, "UPDATE $this->tablename SET  WHERE type_of_content=?");		
 		$this->throwExceptionOnError();
 		
-		mysqli_stmt_bind_param($stmt, 'sssssi', $item->customer_name, $item->website, $item->date_entered->toString('YYYY-MM-dd HH:mm:ss'), $item->customer_type, $item->status, $item->customer_id);		
+		mysqli_stmt_bind_param($stmt, 's',$item->type_of_content);		
 		$this->throwExceptionOnError();
 
 		mysqli_stmt_execute($stmt);		
@@ -166,12 +164,12 @@ class CustomerService {
 	 * 
 	 * @return void
 	 */
-	public function deleteCustomer($itemID) {
+	public function deleteContents($itemID) {
 				
-		$stmt = mysqli_prepare($this->connection, "DELETE FROM $this->tablename WHERE customer_id = ?");
+		$stmt = mysqli_prepare($this->connection, "DELETE FROM $this->tablename WHERE type_of_content = ?");
 		$this->throwExceptionOnError();
 		
-		mysqli_stmt_bind_param($stmt, 'i', $itemID);
+		mysqli_stmt_bind_param($stmt, 's', $itemID);
 		mysqli_stmt_execute($stmt);
 		$this->throwExceptionOnError();
 		
@@ -217,7 +215,7 @@ class CustomerService {
 	 * 
 	 * @return array
 	 */
-	public function getCustomer_paged($startIndex, $numItems) {
+	public function getContents_paged($startIndex, $numItems) {
 		
 		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename LIMIT ?, ?");
 		$this->throwExceptionOnError();
@@ -228,13 +226,12 @@ class CustomerService {
 		
 		$rows = array();
 		
-		mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+		mysqli_stmt_bind_result($stmt, $row->type_of_content);
 		
 	    while (mysqli_stmt_fetch($stmt)) {
-	      $row->date_entered = new DateTime($row->date_entered);
 	      $rows[] = $row;
 	      $row = new stdClass();
-	      mysqli_stmt_bind_result($stmt, $row->customer_id, $row->customer_name, $row->website, $row->date_entered, $row->customer_type, $row->status);
+	      mysqli_stmt_bind_result($stmt, $row->type_of_content);
 	    }
 		
 		mysqli_stmt_free_result($stmt);		
