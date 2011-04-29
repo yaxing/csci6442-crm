@@ -1,9 +1,9 @@
 #labels Phase-Implementation
 <strong>Permission::assign($who, $permission);</strong>
 
-Desc: Assign a permission to a user or a worker role
+Desc: Assign a permission to a worker role
 
-Param: $who - assign target, could be an account person account id or a worker role type name
+Param: $who - assign target, could be a worker role type name
              $permission - permission name
 
 return: true or error message
@@ -11,18 +11,18 @@ return: true or error message
 
 <strong>Permission::check($who, $permission);</strong>
 
-Desc: Check if a user or a worker role has a certain permission
+Desc: Check if a worker role has a certain permission
 
-Param: $who - assign target, could be an account person account id or a worker role type name
+Param: $who - assign target, could be a worker role type name
              $permission - permission name
 
 return: true or false
 
 <strong>Permission::unassign($who, $permission);</strong>
 
-Desc: Unassign a permission for a certain user or a worker role
+Desc: Unassign a permission for a certain worker role
 
-Param:$who - assign target, could be an account person account id or a worker role type name
+Param:$who - assign target, could be a worker role type name
              $permission - permission name
 
 return: true or error message
