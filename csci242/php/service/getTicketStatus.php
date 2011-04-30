@@ -8,11 +8,8 @@
 
 include_once '../../config.php';
 
-//$ticketId = $_POST["ticketId"];
-//$manager = $_POST["isManager"];
-
-$ticketId = 1;
-$manager = 'true';
+$ticketId = $_POST["ticketId"];
+$manager = $_POST["isManager"];
 
 $db = new Database();
 
