@@ -8,8 +8,11 @@
 
 include_once '../../config.php';
 
-$ticketId = $_POST["ticketId"];
-$manager = $_POST["isManager"];
+//$ticketId = $_POST["ticketId"];
+//$manager = $_POST["isManager"];
+
+$ticketId = 1;
+$manager = 'true';
 
 $db = new Database();
 
@@ -20,10 +23,10 @@ $result = $db->fetchObject();
 $curStatus = $result[0]->ticket_status;
 
 if($manager){
-	$sql = "select * from status where status <> '".$curStatus."'";
+	$sql = "select * from status where status <> '".$curStatus."' and ticket_or_action = 1";
 }
 else{
-	$sql = $sql = "select * from status where status <> '".$curStatus."' and status <> 'Approved'";
+	$sql = $sql = "select * from status where status <> '".$curStatus."' and status <> 'Approved' and ticket_or_action = 1";
 }
 
 $db->select($sql);
@@ -31,8 +34,14 @@ $result = $db->fetchAssoc();
 
 foreach ($result as $index=>$row){
 	echo "<status>\n";
-	foreach ($row as $column => $value)
-	echo "<$column>$value</$column>\n";
+	$count = 0;
+	foreach ($row as $column => $value){
+		if($count > 0){
+			break;
+		}
+		echo "<$column>$value</$column>\n";
+		$count ++;
+	}
 	echo "</status>\n\n";
 }
 
