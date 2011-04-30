@@ -105,7 +105,7 @@ class Permission
 	/**
 	 * assign
 	 * Assign certain permission to certain target
-	 * @param $who permission target, could be: 1) account person id 2) worker role type
+	 * @param $who permission target, could be a worker role type
 	 * @param $permission the permission needs to be assigned
 	 * @return if target doesn't exist or action failed, echo error info
 	 */
@@ -155,7 +155,7 @@ class Permission
   	/**
 	 * Delete
 	 * Delete certain permission for certain target
-	 * @param $who permission target, could be: 1) account person id 2) worker role type
+	 * @param $who permission target, could be a worker role type
 	 * @param $permission the permission needs to be deleted for target
 	 * @return true or echo error info
 	 */
@@ -183,7 +183,7 @@ class Permission
 	/**
 	 * Check
 	 * check if target has certain permission
-	 * @param $who permission target, could be: 1) account person id 2) worker role type
+	 * @param $who permission target, could be a worker role type
 	 * @param $permission the permission needs to be checked
 	 * @return true or false
 	 */
