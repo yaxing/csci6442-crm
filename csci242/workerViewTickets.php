@@ -15,12 +15,13 @@ include_once 'header.php';
  
 
 	// variables you get from system
-	//$assigned_to_worker=$userId; 
+	$assigned_to_worker=$userId; 
 	
-	$assigned_to_worker=1;
+	//test variable			     
+	/*$assigned_to_worker=1;*/
 
 	//execute statement
-	$sql = "SELECT * FROM ticket WHERE ticket_id = ANY (SELECT parent_ticket FROM action WHERE assigned_to_worker = $assigned_to_worker);";
+	$sql = "SELECT * FROM ticket WHERE ticket_id = ANY (SELECT parent_ticket FROM action WHERE assigned_to_agent = $assigned_to_worker);";
 	
 	$db->select($sql);
 	$result = $db->fetchAssoc();
@@ -32,7 +33,7 @@ include_once 'header.php';
 		echo "</ticket>\n\n";
 	}	
 	
-	$sql = "SELECT * FROM ticket WHERE created_by_worker = $assigned_to_worker;";
+	$sql = "SELECT * FROM ticket WHERE created_by_agent = $assigned_to_worker;";
 	
 	$db->select($sql);
 	$result = $db->fetchAssoc();

@@ -14,17 +14,19 @@ include_once 'header.php';
 #endregion include
  
 	// get the number of agents	
-	/*$sql = "SELECT count(*) FROM agent";
-	$db->select($sql);
-	$result = $db->fetchArray();
-	echo '<numAgents>'.$result[0][0].'</numAgents>';
-*/
+	/*
+	  $sql = "SELECT count(*) FROM agent";
+	  $db->select($sql);
+	  $result = $db->fetchArray();
+	  echo '<numAgents>'.$result[0][0].'</numAgents>';
+        */
+
 	//execute statement
 	$sql = "SELECT * FROM agent;";
 
 	$db->select($sql);
 	$result = $db->fetchAssoc();
-	echo $result;
+	//echo $result;
 	foreach ($result as $index => $row) {
 		echo "<agent>\n";
 		foreach ($row as $column => $value)

@@ -1,9 +1,8 @@
 <?php
 	
 	/**
-	 * Get all permissions
+	 * Get a set of permissions
 	 * 
-	 * @author Alex Florescu
 	 * @team Services
 	 * @date 04/02/2011
 	 */
@@ -14,6 +13,7 @@
 	#endregion include
 	$available_to=$_POST['available_to'];
 	
+
 	//execute statement
 	$sql = "SELECT * FROM permission WHERE available_to=$available_to;";
 	

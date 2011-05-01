@@ -16,12 +16,10 @@ include_once 'header.php';
  
 $role = $_POST['role'];
 $agent_id = $_POST['agent_id'];
-$first_name = $_POST['first_name'];
-$last_name = $_POST['last_name'];
-//$role="testRole";
-//$agent=1;
+//$role="agent";
+//$agent_id=2;
         //execute statement
-        $sql = "INSERT INTO role VALUES ('$role', $agent_id, $first_name, $last_name)";
+        $sql = "INSERT INTO role VALUES ('$role', $agent_id)";
         //echo $sql; 
         $affectedRows = $db->update($sql);
         //affected rows should be exactly 1, otherwise report problem

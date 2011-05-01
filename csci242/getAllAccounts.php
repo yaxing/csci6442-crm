@@ -26,20 +26,21 @@ include_once 'header.php';
 		echo "</customer>\n\n";
 	}
 
-	//get all workers
-	$sql = "SELECT worker.worker_id, first_name, last_name FROM worker, role WHERE role.role_type='worker' AND role.worker_id=worker.worker_id";
+	//get all agents
+	$sql = "SELECT agent.agent_id, first_name, last_name FROM agent";
 
 	$db->select($sql);
 	$result = $db->fetchAssoc();
 	
 	foreach ($result as $index => $row) {
-		echo "<worker>\n";
+		echo "<agent>\n";
 		foreach ($row as $column => $value)
 			echo "<$column>$value</$column>\n";
-		echo "</worker>\n\n";
+		echo "</agent>\n\n";
 	}
 
 	//get all dispatchers
+	/*
 	$sql = "SELECT worker.worker_id, first_name,last_name FROM worker,role WHERE role_type='dispatcher' AND role.worker_id=worker.worker_id";
 
 	$db->select($sql);
@@ -51,6 +52,6 @@ include_once 'header.php';
 			echo "<$column>$value</$column>\n";
 		echo "</dispatcher>\n\n";
 	}
-
+	*/
  
  ?>

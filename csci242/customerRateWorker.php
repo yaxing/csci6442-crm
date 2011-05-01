@@ -18,8 +18,11 @@ include_once 'header.php';
 	$rating=$_POST['rating'];
 	$action_id=$_POST['action_id'];
 	
+	//$rating=1;
+	//$action_id=1;
+	
 	//execute statement
-	$sql = "UPDATE action SET worker_rating=$rating WHERE action_id=$action_id;";
+	$sql = "UPDATE action SET agent_rating=$rating WHERE action_id=$action_id;";
 
 	$affectedRows = $db->update($sql);
 	//affected rows should be exactly 1, otherwise report problem

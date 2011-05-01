@@ -17,6 +17,7 @@ include_once 'header.php';
 $permission_name=$_POST['permission_name'];
 $description=$_POST['description'];
 $available_to=$_POST['available_to'];
+//$permission_name="TestPermission";
 
      if(Permission::add("$permission_name")) {  
        $affectedRows=1; 

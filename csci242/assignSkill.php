@@ -16,12 +16,12 @@ include_once 'header.php';
  
 $skill = $_POST['skill'];
 $agent_id = $_POST['agent_id'];
-$first_name = $_POST['first_name'];
-$last_name = $_POST['last_name'];
+
 //$skill="testSkill";
-//$agent=1;
+//$agent_id=1;
+
         //execute statement
-        $sql = "INSERT INTO woker_skill VALUES ('$skill', $agent_id, $last_name, $first_name)";
+        $sql = "INSERT INTO agent_skill VALUES ('$skill', $agent_id)";
         //echo $sql; 
         $affectedRows = $db->update($sql);
         //affected rows should be exactly 1, otherwise report problem

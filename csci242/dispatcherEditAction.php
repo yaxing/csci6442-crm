@@ -29,7 +29,7 @@ include_once 'header.php';
 	
 	//echo 'H';
 	//execute statement
-	$sql = "UPDATE action SET assigned_to_worker=$assigned_to_worker, assigned_to_skill='$assigned_to_skill',  action_status='$action_status', action_prob_description='$action_prob_description', action_solution_description='$action_solution_description', percent_completed=$percent_completed, action_priority='$action_priority' WHERE action_id=$action_id;";
+	$sql = "UPDATE action SET assigned_to_agent=$assigned_to_worker, assigned_to_skill='$assigned_to_skill',  action_status='$action_status', action_prob_description='$action_prob_description', action_solution_description='$action_solution_description', percent_completed=$percent_completed, action_priority='$action_priority' WHERE action_id=$action_id;";
 	//echo 'H';
 	//echo $sql;
 	$affectedRows = $db->update($sql);

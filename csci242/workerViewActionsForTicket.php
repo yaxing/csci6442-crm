@@ -15,15 +15,13 @@
 	
 	// variables in form 
 	$ticket_id=$_POST['ticket_id']; 
-	
+	//$ticket_id=3;	
+
 	// variables you get from system
-	//$assigned_to_worker=$userId; 
-	
-	//$ticket_id=1;
-	$assigned_to_worker=1;
-	
+	$assigned_to_worker=$userId; 
+			
 	//execute statement
-	$sql = "SELECT * FROM action WHERE parent_ticket=$ticket_id AND assigned_to_worker=$assigned_to_worker";
+	$sql = "SELECT * FROM action WHERE parent_ticket=$ticket_id AND assigned_to_agent=$assigned_to_worker";
 	
 	$db->select($sql);
 	

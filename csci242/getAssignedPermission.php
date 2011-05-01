@@ -14,9 +14,10 @@
 	#endregion include
 	
 	$worker_role_type=$_POST['worker_role_type'];
-	
+	//$worker_role_type="admin";	
+
 	//execute statement
-	$sql = "SELECT * FROM assigned_permission WHERE worker_role_type='$worker_role_type';";
+	$sql = "SELECT * FROM assigned_permission WHERE agent_role_type='$worker_role_type';";
 	
 	$db->select($sql);
 	$result = $db->fetchAssoc();

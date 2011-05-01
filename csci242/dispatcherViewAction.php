@@ -16,7 +16,7 @@
 	// variables in form 
 	$action_id=$_POST['action_id']; 
 	
-	//$ticket_id=1;
+	//$action_id=1;
 	
 	//execute statement
 	$sql = "SELECT * FROM action WHERE action_id=$action_id";
