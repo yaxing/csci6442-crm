@@ -12,11 +12,12 @@ define('ROOT_PATH', dirname(__FILE__));
 ini_set('default_charset', 'utf-8');
 
 ini_set('include_path', 
-			ROOT_PATH.DIRECTORY_SEPARATOR.'php'.DIRECTORY_SEPARATOR.'common'.DIRECTORY_SEPARATOR
+			//ROOT_PATH.DIRECTORY_SEPARATOR.'php'.DIRECTORY_SEPARATOR.'common'.DIRECTORY_SEPARATOR
+			ROOT_PATH.'/php/common'
         );
 	
-define ( "IS_DEBUG", true );
-//define ( "IS_DEBUG", FALSE );
+//define ( "IS_DEBUG", true );
+define ( "IS_DEBUG", FALSE );
 
 if (IS_DEBUG) {
 	ini_set ( 'display_errors', 'on' );

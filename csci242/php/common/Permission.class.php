@@ -25,32 +25,6 @@ class Permission
 	}
 	
 	/**
-	 * findWho
-	 * check if permission target exists and find the user's category: worker role or account person
-	 * @param $who permission target, could be: 1) account person id 2) worker role type
-	 * @return if target exists(role type or account person), return corresponding type, else echo error
-	 */
-	private static function findWho($who){
-		$db = new Database();
-		$acc = "select * from account_person where account_person_id = ".$who;
-		$worker = "select * from role_type where role_type = '".$who."'";
-		
-		$isAcc = $db->select($acc);
-		if($isAcc && $db->numRows() > 0){
-			return "account";
-		}
-		
-		$isAcc = $db->select($worker);
-		if($isAcc && $db->numRows() > 0){
-			return "role";
-		}
-		
-		else{
-			Permission::error("Can't find target");
-		}
-	}
-	
-	/**
 	 * findPermission
 	 * check if the permission exists
 	 * @param $permission
@@ -72,26 +46,17 @@ class Permission
 /**
 	 * isAssigned
 	 * check if the permission has already been assigned to the target
-	 * @param $type  role or account
 	 * @param $who target
 	 * @param $permission
 	 * @return true or false
 	 */
-	private static function isAssigned($type, $who, $permission){
+	private static function isAssigned($who, $permission){
 		$db = new Database();
-		
-		switch($type){
-			case "role":
-				$sql = "select * from assigned_permission where worker_role_type = '".$who."' 
-						and permission_name = '".$permission."'";
-				break;
-			case "account":
-				$sql = "select * from assigned_permission where account_person_id = '".$who."' 
-						and permission_name = '".$permission."'";
-				break;
-		}
+		$sql = "select * from assigned_permission where agent_role_type = '".$who."' 
+				and permission_name = '".$permission."'";
 		
 		$find = $db->select($sql);
+		
 		if($find && $db->numRows() > 0){
 			return true;
 		}
@@ -111,8 +76,6 @@ class Permission
 	 */
 	public static function assign($who, $permission){
 		
-		$type = Permission::findWho($who);
-		
   		if(!$findPermission = Permission::findPermission($permission)){
   			Permission::error("Can't find permission.");
   		}
@@ -123,25 +86,9 @@ class Permission
   			return true;
   		}
   		
-  		switch($type){
-  			case "role":
-  				$sql = "insert into assigned_permission values(
-  							null,
-  							null,
-  							'".$who."',
-  							'".$permission."'
-  						)";
-  				break;
-  			case "account":
-  				$sql = "insert into assigned_permission values(
-  							null,
-  							'".$who."',
-  							null,
-  							'".$permission."'
-  						)";
-  				
-  				break;
-  		}	
+  		$sql = "insert into assigned_permission set 
+  							`agent_role_type` = '".$who."',
+  							`permission_name` = '".$permission."'";
   		
   		$db = new Database();
   		
@@ -160,17 +107,8 @@ class Permission
 	 * @return true or echo error info
 	 */
 	public static function unassign($who, $permission){
-	  	switch(Permission::findWho($who)){
-	  		case 'role':
-	  			$sql = "delete from assigned_permission where 
-	  			 		worker_role_type = '".$who."' and permission_name = '".$permission."'";
-	  			break;
-	  		case 'account':
-	  			$sql = $sql = "delete from assigned_permission where 
-	  			account_person_id = ".$who." and permission_name = '".$permission."'";
-	  		default:
-	  			break;
-	  	}
+	  	$sql = "delete from assigned_permission where 
+	  			agent_role_type = '".$who."' and permission_name = '".$permission."'";
 		
 	 	$db = new Database();
 	 	if($db->delete($sql) > 0){
@@ -188,7 +126,7 @@ class Permission
 	 * @return true or false
 	 */
 	public static function check($who, $permission){
-  		return Permission::isAssigned(Permission::findWho($who), $who, $permission);
+  		return Permission::isAssigned($who, $permission);
 	}
 	
 	/**
@@ -197,13 +135,13 @@ class Permission
 	 * @param $permission new permission name
 	 * @return true or false
 	 */
-	public static function add($permission){
+	public static function add($permission, $description){
   		if(Permission::findPermission($permission)){
   			Permission::error("Permission already existed.");
   		}
   		
   		$db = new Database();
-  		$sql = "insert into permission values('".$permission."')";
+  		$sql = "insert into permission set `permission_name` = '".$permission."', `description` = '".$description."'";
   		if($db->insert($sql) >= 0){
   			return true;
   		}

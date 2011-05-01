@@ -5,7 +5,7 @@ include_once 'config.php';
  * add new permission
  */
 
-if(Permission::add("delete_ticket")){
+if(Permission::add("delete_ticket", "able to delete tickets")){
 	echo "Added new permission 'delete_ticket'</br>";
 }
 
