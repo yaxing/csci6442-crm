@@ -13,7 +13,8 @@
 include_once 'header.php';
 #endregion include
  
-$agent_id = $_POST["agent_id"];
+	$agent_id = $_POST["agent_id"];
+	//$agent_id=1;
 
 	//execute statement
 	$sql = "SELECT role_type FROM role where agent_id ='".$agent_id."' ;";

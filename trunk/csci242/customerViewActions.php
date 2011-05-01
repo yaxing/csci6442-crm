@@ -13,11 +13,11 @@
 include_once 'header.php';
 #endregion include
  
-
 	// ** CURRENTLY only shows all actions that are connected with a ticket ** 
 	
 	// variables you get from system
 	$applicant=$userId; 
+	//$applicant=1;
 
 	//execute statement
 	$sql = "SELECT action.* FROM action,ticket WHERE action.parent_ticket=ticket.ticket_id AND ticket.contact_id = $applicant";

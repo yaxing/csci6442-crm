@@ -17,7 +17,7 @@ include_once 'header.php';
 	$assigned_to_worker=1; //$userId; 
 	
 	//execute statement
-	$sql = "SELECT * FROM action WHERE assigned_to_worker=$assigned_to_worker;";
+	$sql = "SELECT * FROM action WHERE assigned_to_agent=$assigned_to_worker;";
 
 	$db->select($sql);
 	$result = $db->fetchAssoc();

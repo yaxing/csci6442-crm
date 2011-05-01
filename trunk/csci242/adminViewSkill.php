@@ -14,7 +14,7 @@ include_once 'header.php';
 #endregion include
  
 $agent_id = $_POST["agent_id"];
-//$agent_id = "2";
+//$agent_id = "1";
 	//execute statement
 	$sql = "SELECT * FROM agent_skill where agent_id ='".$agent_id."' ;";
 

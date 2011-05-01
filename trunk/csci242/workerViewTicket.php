@@ -18,7 +18,6 @@ include_once 'header.php';
 
 	//$ticket_id=1;
 
-
 	//execute statement
 	$sql = "SELECT * FROM ticket WHERE ticket_id = $ticket_id";
 
