@@ -16,8 +16,8 @@ ini_set('include_path',
 			ROOT_PATH.'/php/common'
         );
 	
-//define ( "IS_DEBUG", true );
-define ( "IS_DEBUG", FALSE );
+define ( "IS_DEBUG", true );
+//define ( "IS_DEBUG", FALSE );
 
 if (IS_DEBUG) {
 	ini_set ( 'display_errors', 'on' );
