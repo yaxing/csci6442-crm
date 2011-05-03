@@ -14,7 +14,7 @@ include_once 'header.php';
 $action_id = $_POST["action_id"];
 $status = $_POST["action_status"];
 
-$sql = "update `action` set `action_status` = '".$status."' where `action_id` = ".$ticket_id;
+$sql = "update `action` set `action_status` = '".$status."' where `action_id` = ".$ ticket_id;
 
 $affectedRows = $db->update($sql);
 //affected rows should be exactly 1, otherwise report problem
