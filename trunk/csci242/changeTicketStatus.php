@@ -14,7 +14,7 @@ include_once 'header.php';
 include_once 'emailFunction.php';
 #endregion include
 
-$contatct_id = $_POST["contact_id"];
+//$contatct_id = $_POST["contact_id"];
 $ticket_id = $_POST["ticket_id"];
 $status = $_POST["ticket_status"];
 
@@ -30,6 +30,7 @@ if($status == "Approved"){
 	$ticketSummary = $result[0]["ticket_summary"];
 	$body = "Your ticket about '".$ticketSummary."' has been officially closed.";
 	$subject = "Ticket closed";
+	$contact_id = $result[0]["contact_id"];
 	
 	$sql = "select value from contact_communication where contact_id = ".$contact_id." and type_of_communication = 'Email'";
 	$db->select($sql);
