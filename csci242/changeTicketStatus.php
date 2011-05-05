@@ -19,9 +19,14 @@ $ticket_id = $_POST["ticket_id"];
 $status = $_POST["ticket_status"];
 
 //$contact_id = 1;
-//$ticket_id = 1;
-//$status = "Approved";
+$ticket_id = 1;
+$status = "Approved";
 
+$sql = "update `ticket` set `ticket_status` = '".$status."' where `ticket_id` = ".$ticket_id;
+
+$affectedRows = $db->update($sql);
+//affected rows should be exactly 1, otherwise report problem
+echo '<affectedRows>'.$affectedRows."</affectedRows>\n";  
 
 if($status == "Approved"){
 	$sql = "select * from ticket where ticket_id = ".$ticket_id;
@@ -41,11 +46,5 @@ if($status == "Approved"){
 		email($email, $subject, $body);
 	}	
 }
-
-$sql = "update `ticket` set `ticket_status` = '".$status."' where `ticket_id` = ".$ticket_id;
-
-$affectedRows = $db->update($sql);
-//affected rows should be exactly 1, otherwise report problem
-echo '<affectedRows>'.$affectedRows."</affectedRows>\n";  
 
 ?>
