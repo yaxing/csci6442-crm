@@ -90,6 +90,7 @@ class Hierarchy{
 	 */
 	public static function getEffeciveRole($roles){
 		Hierarchy::$height = array();
+		
 		//calculate height for each designated role
 		foreach($roles as $value){
 			Hierarchy::$curNode = $value;
@@ -103,6 +104,9 @@ class Hierarchy{
 				$max = $value;
 			}
 		}
+		//print_r(Hierarchy::$tree);
+//		echo $max;
+//		die();
 		return $max;
 	}
 	
@@ -111,10 +115,10 @@ class Hierarchy{
 	 * perform depth first search to calculate height of certain nodes
 	 * @param string @role
 	 */
-	private static function dfs($role){
+	private static function dfs($curRole){
 		//get position of current role
 		$curNode = Hierarchy::$curNode;
-		$tmp = Hierarchy::$tree[$role];
+		$tmp = Hierarchy::$tree[$curRole];
 		if($tmp == null || count($tmp) == 0){
 			return;
 		}
