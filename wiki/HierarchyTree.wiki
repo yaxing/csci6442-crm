@@ -1,0 +1,9 @@
+==HierarchyTree==
+
+Hierarchy will be established as a tree when the system started or the first time login. The tree can be retrieved statically (controlled using singleton pattern)
+
+===API===
+
+||*getTree()*||_return tree as an adjacent matrix_||{{{Hierarchy::getTree();}}}||
+||*refreshTree()*||_refresh the tree, should be called whenever there are changes on roles(assign, unassign, new, delete)_||{{{Hierarchy::refreshTree();}}}||
+||*getEffeciveRole($roles)*||_get the role with the highest hierarchy in a certain role group, DFS_||{{{Hierarchy::getEffeciveRole($roles);}}}||
