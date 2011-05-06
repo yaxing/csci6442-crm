@@ -23,11 +23,11 @@ session_start();
 //new login 
 //if (isset($_POST['username']) && isset($_POST['password']) ) {
 if(true) {
-	//$user_name = $_POST['username'];//"admin";//
-	//$user_pwd = $_POST['password'];//"dkd";//
+	$user_name = $_POST['username'];//"admin";//
+	$user_pwd = $_POST['password'];//"dkd";//
 	
-	$user_name = "admin";
-	$user_pwd = "admin";
+	//$user_name = "admin";
+	//$user_pwd = "admin";
 	/*$sql = "insert into contact_type values('".$user_name."')";
 	$affectedRow = $db->update($sql);
 	die();*/
@@ -59,7 +59,6 @@ if(true) {
 			Hierarchy::getTree();
 			$user_role = Hierarchy::getEffeciveRole($roles);
 			echo "<br/> agent_id: ".$user_id." <br/> role:".$user_role;
-			die();
 		}
 	}	
 	else{
