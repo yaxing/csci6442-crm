@@ -57,8 +57,8 @@ if(true) {
 				array_push($roles, $value['role_type']);
 			}
 			Hierarchy::getTree();
-			$role = Hierarchy::getEffeciveRole($roles);
-			echo "<br/> agent_id: ".$user_id." <br/> role:".$role;
+			$user_role = Hierarchy::getEffeciveRole($roles);
+			echo "<br/> agent_id: ".$user_id." <br/> role:".$user_role;
 		}
 	}	
 	else{

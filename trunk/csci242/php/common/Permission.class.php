@@ -14,6 +14,7 @@ include_once '../../config.php';
 
 class Permission  
 {
+	private static $tree;
 	/**
 	 * error
 	 * error handling function
@@ -126,7 +127,31 @@ class Permission
 	 * @return true or false
 	 */
 	public static function check($who, $permission){
-  		return Permission::isAssigned($who, $permission);
+  		//return Permission::isAssigned($who, $permission);
+  		Permission::$tree = Hierarchy::getTree();
+  		return Permission::dfs($who, $permission);
+	}
+	
+	/**
+	 * dfs for subordinates permission checking
+	 * @param string $role
+	 */
+	private static function dfs($role, $permission){
+		//get subordinates
+		$has = false;
+		if(Permission::isAssigned($role, $permission)){
+			$has = true;
+			return $has;
+		}
+		$tmp = Permission::$tree[$role];
+		if($tmp == null || count($tmp) == 0){
+			return false;
+		}
+		foreach($tmp as $value){
+			if(Permission::dfs($value, $permission)){
+				return true;
+			}
+		}
 	}
 	
 	/**

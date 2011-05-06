@@ -6,7 +6,8 @@
  * @team SET
  * @date 05/02/2011
  */
-include_once 'Database.class.php';
+//include_once 'Database.class.php';
+include_once '../../config.php';
 
 class Hierarchy{
 	private static $role;

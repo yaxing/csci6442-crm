@@ -1,6 +1,13 @@
 <?php
 include_once 'config.php';
 
+//if(Permission::check('admin', 'permission manage')){
+//	echo 1;
+//	die();
+//}
+//echo 0;
+//die();
+
 /*
  * add new permission
  */
