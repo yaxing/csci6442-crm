@@ -26,8 +26,8 @@ if(true) {
 	$user_name = $_POST['username'];//"admin";//
 	$user_pwd = $_POST['password'];//"dkd";//
 	
-	//$user_name = "admin";
-	//$user_pwd = "admin";
+	//$user_name = "agent";
+	//$user_pwd = "agent";
 	/*$sql = "insert into contact_type values('".$user_name."')";
 	$affectedRow = $db->update($sql);
 	die();*/
