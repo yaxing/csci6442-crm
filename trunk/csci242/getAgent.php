@@ -22,7 +22,7 @@ include_once 'header.php';
 
 	$db->select($sql);
 	
-	$db->fetchAssoc();
+	$result = $db->fetchAssoc();
 	
 	foreach ($result as $index => $row) {
 		echo "<agent>";
